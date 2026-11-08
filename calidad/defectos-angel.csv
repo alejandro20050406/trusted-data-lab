@@ -1,0 +1,3 @@
+fecha,archivo,defecto,correccion,estado
+2026-11-08,docs/E0/propuesta.md,Enlace incorrecto,Se sustituyó por el enlace oficial,Corregido
+2026-11-08,docs/E0/datos/profeco,Profeco no dejó acceder a los datasets,Se sustituyó la fuente de Profeco por Coneval, Corregido
