@@ -1,0 +1,72 @@
+﻿
+Identifier: 
+
+Title: Índice Nacional de Precios al Consumidor y sus principales componentes
+
+Description: INEGI. Índice Nacional de Precios al Consumidor. SNIEG. Información de Interés Nacional
+
+Para conocer más acerca de la elaboración del INPC consulte la sección "Aspectos metodológicos" en la página de precios. https://www.inegi.org.mx/programas/inpc/2018/?init=0
+
+Mide la evolución en el tiempo de la variación de los precios, de una canasta fija de bienes y servicios representativos del consumo promedio de las familias mexicanas.
+
+La información de interés nacional que se presenta son los índices mensuales de los siguientes conceptos:
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, Precios al Consumidor (INPC)
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, Subyacente
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, Subyacente, Mercancías
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, Subyacente, Servicios
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, No subyacente
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, No subyacente, Agropecuarios
+- Índice nacional de precios al consumidor (mensual), Resumen, Subíndices subyacente y complementarios, No subyacente, Energéticos y tarifas autorizadas por el gobierno
+
+
+Mediante los índices, se puede obtener la viariación porcentual de cualquier periodo utilizando la siguiente fórmula:
+Variación = (Valor del índice en el periodo actual / Valor del indice en el periodo anterior - 1) * 100
+
+Ejemplo 1: Para obtener la variación anual del INPC de cualquier periodo, en este caso de diciembre de 2016 contra el mismo periodo del año anterior, se obtiene de la siguiente forma:
+
+Valor del INPC en diciembre de 2016: 122.515
+Valor del INPC en diciembre de 2015: 118.532
+
+Variación = ( 122.515 / 118.532 - 1 ) * 100 = 3.36
+
+
+Ejemplo 1: Para obtener la variación mensual del INPC de cualquier periodo, en este caso de diciembre de 2016 contra noviembre del mismo año, se obtiene de la siguiente forma:
+
+Valor del INPC en diciembre de 2016: 122.515
+Valor del INPC en noviembre de 2016: 121.953
+
+Variación = ( 122.515 / 121.953 - 1 ) * 100 = 0.46
+
+Para conocer más acerca de la elaboración del INPC consulte la sección "Aspectos metodológicos" en la página de precios. https://www.inegi.org.mx/programas/inpc/2018/?init=0
+
+La generación del INPC es una facultad exclusiva del INEGI conforme dispuesto por artículo 59 fracción 3 de la LSNIEG. Así mismo, dicha información fue determinada como 
+Información de Interés Nacional en el artículo 78 de la LSNIEG.
+
+Modified: 2026-10-07
+
+Publisher: Instituto Nacional de Estadística y Geografía, INEGI
+
+Mbox: atencion.usuarios@inegi.org.mx
+
+License: https://www.inegi.org.mx/inegi/terminos.html
+
+DataDictionary: 
+
+Keyword: "Índice", "Precios", "Inflación", "Variación", "Consumidor", "Subyacente", "No subyacente".
+
+ContactPoint: Mtro. J. Armando Aguiar Rodríguez, 800 111 4634
+
+temporal: 2003-01-01-2026-09-01
+
+Spatial: Estados Unidos Mexicanos
+
+AccrualPeriodicity: Mensualmente
+
+Distribution: https://www.inegi.org.mx/programas/inpc/2018/
+
+
+
+
+
+
+
