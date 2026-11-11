@@ -51,14 +51,17 @@ def capturar(destino, fuentes=FUENTES):
     for fuente in fuentes:
         fecha = dt.datetime.now(dt.timezone.utc).isoformat()
         entrada = {'fuente': fuente['id'], 'url': fuente['url'], 'consultado_utc': fecha}
+        etapa = 'configuracion'
         try:
             partes = urllib.parse.urlsplit(fuente['url'])
             if partes.scheme != 'https':
                 raise ValueError('Solo se admiten URLs HTTPS')
             robots_url = urllib.parse.urlunsplit((partes.scheme, partes.netloc, '/robots.txt', '', ''))
+            etapa = 'robots'
             robots, tipo, _ = obtener(robots_url)
             if tipo != 'text/plain' or not permitido(robots.decode('utf-8', errors='replace'), fuente['url']):
                 raise ValueError('robots.txt no permite o no confirma el acceso')
+            etapa = 'producto'
             datos, tipo, url_final = obtener(fuente['url'])
             if tipo != 'text/html':
                 raise ValueError('Respuesta no es HTML')
@@ -69,8 +72,8 @@ def capturar(destino, fuentes=FUENTES):
                            sha256=hashlib.sha256(datos).hexdigest(), bytes=len(datos),
                            robots_url=robots_url, robots_sha256=hashlib.sha256(robots).hexdigest())
         except (OSError, ValueError, UnicodeError) as error:
-            entrada.update(estado='error', detalle=str(error))
-            print(f"{fuente['id']}: {type(error).__name__}: {error}", file=sys.stderr)
+            entrada.update(estado='error', etapa_error=etapa, detalle=str(error))
+            print(f"{fuente['id']} ({etapa}): {type(error).__name__}: {error}", file=sys.stderr)
         resultados.append(entrada)
         print(f"{fuente['id']}: {entrada['estado']}")
     (destino / 'manifiesto.json').write_text(json.dumps(resultados, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
 from unittest.mock import patch
 from scripts.captura_dental import capturar, permitido, validar_html
@@ -35,3 +36,10 @@ class CapturaDentalTest(unittest.TestCase):
             resultados = capturar(Path(carpeta), [{'id': 'ejemplo', 'url': 'https://ejemplo.test/producto'}])
             self.assertEqual(resultados[0]['estado'], 'error')
             self.assertEqual(obtener.call_count, 1)
+
+    @patch('scripts.captura_dental.obtener')
+    def test_registra_si_el_error_ocurre_en_robots(self, obtener):
+        obtener.side_effect = urllib.error.URLError('fallo TLS')
+        with tempfile.TemporaryDirectory() as carpeta:
+            resultado = capturar(Path(carpeta), [{'id': 'ejemplo', 'url': 'https://ejemplo.test/producto'}])
+            self.assertEqual(resultado[0]['etapa_error'], 'robots')
