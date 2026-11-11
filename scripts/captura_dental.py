@@ -70,6 +70,7 @@ def capturar(destino, fuentes=FUENTES):
                            robots_url=robots_url, robots_sha256=hashlib.sha256(robots).hexdigest())
         except (OSError, ValueError, UnicodeError) as error:
             entrada.update(estado='error', detalle=str(error))
+            print(f"{fuente['id']}: {type(error).__name__}: {error}", file=sys.stderr)
         resultados.append(entrada)
         print(f"{fuente['id']}: {entrada['estado']}")
     (destino / 'manifiesto.json').write_text(json.dumps(resultados, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
