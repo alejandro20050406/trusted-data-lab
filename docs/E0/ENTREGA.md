@@ -5,7 +5,7 @@ El proyecto se replanteó como un comparador de precios para profesionales de Co
 ## Lo que existe
 
 - Documentación de la nueva propuesta y entrevista simulada, sin atribuir respuestas reales a Amaranta.
-- Existe un extractor odontológico y una primera captura local de las tres fuentes. El flujo está en la rama predeterminada; una prueba manual en GitHub capturó dos fuentes y falló con Imdent por una conexión TLS. La programación diaria aún no ha sido observada.
+- Existe un extractor odontológico y una captura local de las tres fuentes. En GitHub, una ejecución manual con Ubuntu 24.04 capturó las tres fuentes tras fallos anteriores de conexión TLS con Imdent. La programación diaria aún no ha sido observada.
 
 ## Pendiente
 

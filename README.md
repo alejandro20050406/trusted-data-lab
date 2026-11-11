@@ -2,7 +2,7 @@
 
 Proyecto integrador de Análisis Estadístico para Ciencia de Datos y Calidad en los Sistemas de Información. Se propone comparar precios publicados de insumos para profesionales de Colima y Villa de Álvarez.
 
-**Estado:** captura inicial de páginas de Imdent, Tu Universo Dental Colima y Dentalink Market México implementada y probada localmente. En GitHub está programada diariamente, pero la prueba manual falló para Imdent por un error de conexión TLS; las otras dos fuentes respondieron. La programación diaria aún no ha sido observada. Se cuenta con un periodo observado, no con 36; no existe todavía un comparador funcional. La entrevista de Amaranta es simulada.
+**Estado:** captura de páginas de Imdent, Tu Universo Dental Colima y Dentalink Market México implementada y probada localmente y en GitHub Actions. El 11 de noviembre de 2026 una ejecución manual capturó las tres fuentes usando Ubuntu 24.04; la programación diaria aún no ha sido observada. Se cuenta con un día observado, no con 36 periodos diarios; no existe todavía un comparador funcional. La entrevista de Amaranta es simulada.
 
 - [Propuesta y entrevista](docs/E0/propuesta.md)
 - [Plan de captura y calidad](docs/E0/captura-bronce.md)
