@@ -1,21 +1,26 @@
-# Captura de datos: capa Bronce
+# Plan de captura: precios odontológicos
 
-Se descargan dos archivos oficiales originales. INEGI aporta el INPC mensual nacional: un índice, no precios en pesos. CONEVAL aporta el valor mensual por persona de la canasta alimentaria y de la canasta alimentaria más la no alimentaria, por ámbito urbano y rural. No son precios por tienda ni cifras exclusivas de Colima.
+**Captura inicial implementada.** `scripts/captura_dental.py` guarda tres páginas públicas originales y un manifiesto por ejecución en `datos/bronce/odontologia/`. El 11 de noviembre de 2026 se obtuvo una captura local exitosa por fuente.
 
-La serie de CONEVAL contiene **399 meses de enero de 1992 a marzo de 2025**. Es histórica, no actual. CONEVAL calculó la serie usando datos de INEGI; no son fuentes estadísticamente independientes. INEGI publica posteriormente las líneas de pobreza. Para analizar precios recientes habrá que integrar y verificar esa continuidad; esta captura no lo hace.
+## Fuentes y viabilidad
 
-## Archivos y uso
+Se trabajará con tres fuentes web de precios públicos: [Imdent](https://imdent.com/stores/deposito-dental-q-narvarte?view=list), [Tu Universo Dental Colima](https://www.tuuniversodental.com.mx/) y [Dentalink Market México](https://dentalinkmarket.com/mx/precios/255-ivoclar-tetric-n-ceram-universal). Tu Universo Dental muestra precios en sus categorías y fichas. Imdent y Dentalink presentan ofertas de proveedores; conservar plataforma y vendedor por separado para detectar ofertas repetidas.
 
-- `datos/bronce/coneval/lineas_pobreza.zip`: archivo original. Descomprímelo y abre el XLSX; en la primera hoja, las columnas G y H muestran el costo mensual por persona de la canasta alimentaria en pesos, rural y urbana. Las columnas J y K incluyen además la canasta no alimentaria.
-- `datos/bronce/inegi/inpc_mensual.zip`: archivo original con CSV, diccionario y metadatos; contiene 285 meses entre enero de 2003 y septiembre de 2026.
-- `datos/bronce/manifiesto.json`: fecha UTC, fuente, resultado, huella SHA-256 y cobertura comprobada.
-- `scripts/captura.py`: descarga y comprueba estructura y al menos 36 meses con datos. Pruebas: `python -m unittest discover -s tests`.
-- `.github/workflows/captura-bronce.yml`: flujo manual y programado el día 12 de cada mes a las 12:23 UTC (06:23 en Colima). Los artefactos de Actions se conservan 90 días.
+Realizar primero una prueba piloto de tres productos idénticos entre al menos dos proveedores, verificando marca, variante y presentación. Registrar URL, titular, acceso, formato, condiciones de uso, restricciones de robots, frecuencia permitida y fecha de revisión. Una página pública no implica automáticamente autorización para extracción o reutilización. No se han confirmado descargas estructuradas, permisos de automatización ni un historial de 36 periodos de precios para las tres fuentes. Si el acceso automático no es viable, ajustar el alcance con los docentes.
 
-Para ejecutar en tu computadora, desde la raíz instala las dependencias con `python -m pip install -r requirements.txt` y ejecuta `python scripts/captura.py`. En GitHub abre Actions → Captura de fuentes oficiales → ejecución → Artifacts y descarga los resultados antes de que venzan. Conserva los ZIP originales antes de generar archivos limpios.
+## Capas propuestas
 
-**Automatización pendiente:** GitHub ejecuta los horarios desde la rama predeterminada. Subir solo `trabajo-e0` no activa la programación, y el flujo manual requiere que el archivo exista en la rama predeterminada. Hay que integrarlo y comprobar una ejecución real; la prueba local no demuestra que Actions esté funcionando.
+1. **Bronce:** conservar respuesta original por fuente y fecha, sin sobrescribir capturas anteriores; registrar URL, fecha UTC, identificador, resultado y huella SHA-256.
+2. **Plata:** extraer nombre, marca, variante, presentación, cantidad, unidad, precio en MXN, proveedor, ubicación, enlace, fecha, disponibilidad, promoción y condiciones conocidas. Validar precio positivo y finito, fecha válida, unidad y cantidad positivas; registrar rechazados y duplicados. Mantener valores originales y no inventar faltantes.
+3. **Oro:** relacionar ofertas solo cuando producto, marca, variante y presentación sean equivalentes. Calcular precio por pieza, gramo o mililitro cuando proceda y estadísticas por producto y proveedor. Mantener por separado envío e impuestos desconocidos; nunca asumir que son cero. Etiquetar localidad del proveedor y destino; no confundir disponibilidad nacional con existencia local.
 
-## Ética y uso
+## Ejecución y limitaciones
 
-La captura hace dos solicitudes mensuales sin evadir controles. Los [términos de CONEVAL](https://www.coneval.org.mx/Paginas/Pie/terminos-uso-libre.aspx) permiten copiar y adaptar su información conservando metadatos, atribuyendo y sin sugerir respaldo institucional. Su [robots.txt](https://www.coneval.org.mx/robots.txt), consultado el 8 de noviembre de 2026, no restringe la ruta del ZIP utilizada. Los [términos del INEGI](https://www.inegi.org.mx/contenidos/inegi/doc/terminos_info.pdf) exigen atribución, conservar metadatos y señalar transformaciones. Robots no sustituye la licencia; se revisarán nuevamente las condiciones antes de cambiar ruta o frecuencia.
+El extractor solicita una página por fuente y comprueba robots.txt antes de cada consulta; no accede a cuentas ni evade restricciones. El 11 de noviembre de 2026 las rutas seleccionadas estaban permitidas por robots.txt. Los términos y condiciones de reutilización siguen sujetos a revisión; el robots.txt por sí solo no concede una licencia. Solo se almacenan respuestas públicas originales y metadatos; se verificará el uso permitido antes de republicar su contenido.
+
+Ejecutar desde la raíz: `python scripts/captura_dental.py`; ejecutar pruebas: `python -m unittest discover -s tests`. Cada ejecución crea una carpeta con instante UTC, tres HTML y un manifiesto con fuente, URL, fecha, resultado, tamaño y SHA-256. Un fallo produce estado de error y código de salida distinto de cero; no se crean datos de precios inexistentes.
+
+El flujo de GitHub Actions está configurado para ejecutarse diariamente a las 12:23 UTC (06:23 en Colima) y manualmente, ejecutar pruebas y guardar el resultado como artefacto por 90 días. Cada ejecución genera un artefacto independiente, no acumula automáticamente los anteriores. Descargar y conservar los artefactos antes de su vencimiento. Para que la programación funcione debe existir en la rama predeterminada y comprobarse una ejecución real; la prueba local no demuestra que Actions esté funcionando.
+
+La captura inicial equivale a **un periodo observado**, no a 36. Alcanzar 36 observaciones diarias requiere 35 días adicionales después de la primera, siempre que todas las ejecuciones tengan éxito. La página de Imdent no identifica el tono y la de Tu Universo Dental contiene variantes; Dentalink muestra A2B sin existencia. Los precios de las tres páginas no deben tratarse todavía como una comparación de variantes idénticas. No hay capa Plata ni tablero.
+

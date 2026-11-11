@@ -1,8 +1,0 @@
-﻿COLUMNA,DESCRIPCION,TIPO_DATO,LONGITUD,CODIGO_VALIDO
-COBERTURA,Área geográfica a la que están referidos los indicadores estadísticos,varchar,30,
-PERIODICIDAD,Periodo de referencia de la información,varchar,20,
-FECHA,"Año, mes y día de referencia de la información",date,,2003-01-01 a 2026-09-01
-CONCEPTO,Descripción de los grandes agregados en que se agrupa la información,varchar,500,
-VALOR,"Es la variación porcentual anual del índice nacional de precios al consumidor, respecto al mismo periodo del año anterior.",float,3.8,000.00000000-999.99999999
-UNIDAD_MEDIDA,Variación porcentual anual,varchar,50,
-ESTATUS,Estatus de las cifras conforme a los Lineamientos de Cambios a la información divulgada en las publicaciones estadísticas y geográficas del INEGI,varchar,50,Cifras definitivas
