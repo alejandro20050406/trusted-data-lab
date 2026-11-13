@@ -29,7 +29,7 @@ jobs:
         id: catalogo
         if: always() && steps.pruebas.outcome == 'success'
         run: python -m scripts.captura_imdent
-      - name: Validar y generar Plata
+      - name: Validar y generar Plata y Oro
         if: always() && steps.pruebas.outcome == 'success' && steps.catalogo.outcome != 'skipped'
         run: python -m src.e1 --salida salida-e1
       - name: Guardar resultados E1
