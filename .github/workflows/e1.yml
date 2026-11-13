@@ -24,7 +24,7 @@ jobs:
       - name: Capturar catálogo Imdent
         id: imdent
         run: python -m scripts.captura_imdent
-      - name: Generar Plata
+      - name: Generar Plata y Oro
         if: always() && steps.imdent.outcome != 'skipped'
         run: python -m src.e1 --salida salida-e1
       - uses: actions/upload-artifact@v4

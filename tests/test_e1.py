@@ -21,6 +21,13 @@ class E1Test(unittest.TestCase):
         self.assertTrue(bad[0]['motivo'])
         self.assertEqual(bad[0]['registro']['precio'], -1.0)
 
+    def test_rechaza_url_https_sin_host(self):
+        fila = dict(fuente='a', url='https://', fecha_utc='2026-01-01T00:00:00+00:00',
+                    archivo='a.html', sha256='a'*64, producto='x', moneda='MXN', precio=10.0)
+        validos, rechazados = validar_filas([fila])
+        self.assertEqual(len(validos), 0)
+        self.assertEqual(len(rechazados), 1)
+
     def test_small_sample(self):
         df = transformar([{'precio': 10.0}, {'precio': 20.0}])
         self.assertTrue(df['atipico_iqr'].isna().all())

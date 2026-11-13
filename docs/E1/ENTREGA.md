@@ -1,62 +1,82 @@
-# Entrega E1 — Puerta de calidad y procesamiento
+# Entrega E1 — Limpieza, integración y calidad de datos
 
-**Proyecto:** Trusted Data Lab, piloto odontológico. **Integrantes:** Adrián y Ángel. **Corte:** 12 de noviembre de 2026 (hora de Colima).
+**Proyecto:** Trusted Data Lab — Observatorio de Abastecimiento Inteligente.
+**Integrantes:** Adrián y Ángel.
+**Ámbito:** captura pública de ofertas comerciales dentales y catálogo institucional ISSSTE.
 
-## Ejecución reproducible
+## Objetivo y alcance
 
-Desde la raíz del repositorio, con Python 3.12 o superior:
+El flujo conserva capturas originales en Bronce, valida cada fuente antes de Plata y genera vistas reducidas e indicadores en Oro. Las ofertas comerciales y las claves ISSSTE tienen granos diferentes: una es una oferta de una tienda en una fecha; la otra, una entrada institucional por clave y nivel de atención. Una coincidencia de nombre no demuestra que sean el mismo producto ni autoriza transferirle un precio.
 
-```bash
-python -m venv .venv
-# Activar el entorno: Windows PowerShell: .venv\Scripts\Activate.ps1
-# macOS/Linux: source .venv/bin/activate
-python -m pip install -r requirements-e1.txt
-python -m unittest discover -s tests
-python -m scripts.captura_imdent
-python -m src.e1
+## Reproducción
+
+En PowerShell, desde la raíz del proyecto y con Python 3.12 o superior:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-e1.txt
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+.\.venv\Scripts\python.exe -m scripts.captura_imdent
+.\.venv\Scripts\python.exe -m src.e1
 ```
 
-El primer comando de captura consulta las cuatro tiendas mexicanas configuradas; para ejecutar solo una tienda, usar por ejemplo `python -m scripts.captura_imdent --tienda deposito-dental-q-narvarte`. La captura necesita internet y crea carpetas nuevas en `datos/bronce/imd_catalogo/`. `python -m src.e1` procesa las capturas ya presentes sin volver a consultar la web. Para obtener nuevos datos hay que volver a ejecutar primero la captura. Los HTML y salidas generados se ignoran en Git; en Actions se conservan como artefactos 90 días.
+Si `.venv` ya existe e incluye las dependencias, no es necesario volver a crearlo. La captura requiere internet y crea carpetas nuevas en `datos/bronce/imd_catalogo/`; el pipeline procesa las capturas locales presentes, sin volver a descargar. Para una sola tienda, usar `python -m scripts.captura_imdent --tienda deposito-dental-q-narvarte`. `--imd-bronce`, `--bronce`, `--catalogo`, `--referencias` y `--salida` permiten seleccionar entradas y salida; esta última no debe existir.
 
-**Conectividad remota:** el 12 de noviembre de 2026 una ejecución anterior de GitHub Actions recibió `SSL: UNEXPECTED_EOF_WHILE_READING`. La conexión se comprobó posteriormente con certificados verificados y se añadió hasta tres reintentos ante errores transitorios, con pausas de 2, 4 y 8 segundos. No se desactiva la validación de certificados ni se reintentan rechazos HTTP 403 o 429. La [ejecución corregida](https://github.com/alejandro20050406/trusted-data-lab/actions/runs/43369393421) completó la captura de las cuatro tiendas y produjo 2,090 observaciones válidas y 91 registros en cuarentena. La fuente puede volver a fallar; cuando ocurre se conserva el motivo y no se presenta la captura como completa. Los archivos locales ignorados por Git no están disponibles automáticamente en Actions.
+Cada corrida crea `datos/e1/<UTC>/`, sin modificar capturas anteriores. Los resultados CSV usan UTF-8 con BOM para abrirse en Excel:
 
-Cada ejecución crea un directorio nuevo `datos/e1/<UTC>/` con `plata.csv`, `cuarentena.json`, `correspondencias.csv` y `resumen.json`. El alcance de E1 termina en Plata; no se genera Oro. Los archivos de ejecuciones anteriores permanecen en sus respectivas carpetas. Se puede indicar `--bronce`, `--catalogo`, `--referencias` y `--salida`; esta última no debe existir. `--catalogo` recibe la ruta del manifiesto ISSSTE, no del CSV. Los resultados no se versionan automáticamente. El workflow `E1 calidad y capas` ejecuta pruebas y pipeline al cambiar entradas, referencias o código y manualmente. El workflow de captura también ejecuta E1 después de capturar, incluso ante un fallo parcial de captura, y conserva Bronce y salidas por 90 días. Cada corrida procesa las capturas versionadas y la nueva captura de esa corrida; no acumula automáticamente artefactos anteriores.
+| Archivo | Contenido |
+| --- | --- |
+| `plata.csv` | Ofertas con precio observado que pasaron Pandera y variables de limpieza. |
+| `cuarentena.json` | Ofertas o páginas rechazadas con razón y referencia a Bronce. |
+| `plata_issste.csv` | Entradas institucionales validadas, sin precios comerciales. |
+| `cuarentena_issste.json` | Filas institucionales rechazadas con número de línea y motivo. |
+| `diagnostico_faltantes.csv` | Faltantes de precio por fuente, tienda y categoría antes de la puerta. |
+| `estimaciones_cuarentena.csv` | Estimaciones exploratorias de faltantes; **no son cotizaciones**. |
+| `validacion_imputacion.csv` | Prueba con precios observados ocultados, estimación y error. |
+| `correspondencias.csv` | Referencias ISSSTE y su estado de revisión. |
+| `oro_inventario.csv` | Última oferta válida por URL y registros ISSSTE en esquema común, con tipo explícito. |
+| `oro_metricas.csv` | Conteos de registros y precios observados por tipo y categoría. |
+| `oro_reduccion.json` | Recuento de entrada y salida y regla de reducción. |
+| `resumen.json` | Cobertura, calidad, validación de imputación y recuentos de ambas capas. |
 
-## Integración y controles
+## Fuentes y captura
 
-Se leen todos los manifiestos de `datos/bronce/odontologia`, se verifica SHA-256 y se extrae el `Product` JSON-LD de cada página. `Offer.price` numérico se convierte a flotante y la moneda a mayúsculas. Se exige un solo producto, una oferta individual, MXN, precio finito positivo hasta 1 000 000, URL HTTPS, fecha con zona horaria, nombre y trazabilidad. Pandera valida estrictamente el esquema antes de Plata. Una oferta agregada con mínimo y máximo no es un precio individual; se envía a cuarentena. Si la estructura cambia, la extracción falla de forma conservadora. Cada rechazo conserva el registro o la entrada del manifiesto y el motivo; los originales siguen en Bronce. Un manifiesto ilegible detiene la ejecución, en vez de producir una salida incompleta.
+Las páginas dentales individuales se procesan desde `datos/bronce/odontologia/`. Las cuatro tiendas mexicanas configuradas de Imdent se recorren por páginas, con revisión de `robots.txt`, una pausa de 1.5 segundos y un límite de 100 páginas por tienda. Se comparan las tarjetas recuperadas con el total anunciado. Cada página se conserva con URL, fecha y SHA-256 en un manifiesto; si falla o cambia la estructura, se registra la captura parcial. No se asegura cobertura de otras tiendas ni de todos los productos mundiales de Imdent.
 
-Además se leen las páginas capturadas de cuatro tiendas mexicanas de Imdent: Depósito Dental Q Narvarte, DDC Depósito Dental del Caribe, Goldentist y DENTAC. La captura consulta `robots.txt`, espera 1.5 segundos entre páginas y recorre el enlace siguiente de cada tienda, con un límite de 100 páginas por tienda. Conserva cada HTML y su SHA-256. Compara el número de tarjetas capturadas con el total anunciado por la tienda; una diferencia, fallo de red, cambio del total o estructura no reconocida deja la captura como parcial y registra el error. No se asegura cobertura de otras tiendas o países de Imdent, ni de productos agregados después de la captura.
+La solicitud HTTPS conserva la verificación de certificados y reintenta hasta tres veces errores transitorios con pausas de 2, 4 y 8 segundos. No reintenta rechazos 403 o 429. La [ejecución anterior verificada](https://github.com/alejandro20050406/trusted-data-lab/actions/runs/43369393421) capturó las cuatro tiendas en GitHub. Fallos futuros se registran; los archivos locales ignorados por Git no se trasladan automáticamente a Actions. Los artefactos de Actions duran 90 días. El ZIP versionado `capas-e1.zip` es una instantánea, no una actualización automática; revisar su resumen y fecha.
 
-Cada tarjeta es una observación. Se extraen nombre, URL y únicamente un precio actual no tachado cuando se identifica de manera inequívoca en MXN; un precio faltante, ambiguo o en otra moneda pasa a cuarentena. La validación no convierte divisas ni inventa precios. La columna `registro_origen` identifica la tarjeta dentro del HTML, y `tienda_imdent` conserva el identificador de la tienda; `archivo` y `sha256` permiten localizar y verificar la página. Si una URL se repite dentro de una captura de tienda se envía a cuarentena; capturas en diferentes momentos se conservan como observaciones históricas. Un CSV de Plata puede contener varias observaciones del mismo producto, por lo que sus filas no equivalen a productos únicos. `resumen.json` informa las URL válidas distintas y el estado y cobertura de cada captura. Dos URL distintas pueden describir artículos equivalentes y no se consideran automáticamente un mismo producto. Los CSV usan UTF-8 con BOM para facilitar su apertura en Excel.
+En Dentalink, la ficha HTML puede publicar un precio individual además de un `AggregateOffer` con rango. Solo se recupera el precio de la tarjeta principal si coinciden el título y la moneda MXN y se identifican un vendedor y un importe únicos. La captura de referencia indica $1,199 para Depósito Dental Molar y **sin stock**. No se toman como ese precio los importes de ofertas alternativas ni los extremos del rango. Si la estructura resulta ambigua, el registro permanece en cuarentena. Se conserva la página original y se registran vendedor y disponibilidad; el precio observado no garantiza existencia o entrega.
 
-Las capturas sucesivas son observaciones distintas, no duplicados que deban eliminarse. El catálogo ISSSTE es otra fuente, en Windows-1252 y sin precio. La tabla de correspondencias descrita abajo relaciona candidatos sin atribuir precios o disponibilidad al catálogo. Las fuentes comerciales tampoco han sido verificadas como presentaciones y variantes equivalentes; Plata no debe emplearse para comparar proveedores ni para decisiones de compra. El límite superior es una regla técnica, no una referencia de precio clínicamente válida.
+## Puerta de calidad y resolución de conflictos
 
-## Correspondencias con el catálogo ISSSTE
+Pandera valida estrictamente los campos, tipos, URL HTTPS, moneda MXN, fecha con zona horaria, trazabilidad y precio finito mayor que cero y no superior a 1,000,000 antes de Plata comercial. El límite superior es técnico, no un precio de referencia. Imdent se interpreta únicamente si existe un precio actual no tachado y único en MXN. Los registros sin precio, con moneda no identificada, estructura ambigua o repetidos en una misma captura se preservan en cuarentena; no se transforman en precios observados.
 
-La tabla mantenida en [`datos/referencias/correspondencias_issste.csv`](../../datos/referencias/correspondencias_issste.csv) contiene las hipótesis explícitas. Para cada producto extraído, el pipeline busca una referencia que coincida **exactamente** en fuente, URL y nombre JSON-LD; no usa similitud de texto ni acepta coincidencias automáticamente. Antes de generar la tabla comprueba el SHA-256 del catálogo contra su manifiesto, lo lee en Windows-1252 y trata la clave como texto. Si el archivo falta, el hash no coincide o una clave referenciada no existe o está duplicada, la ejecución falla. El catálogo contiene al menos una clave duplicada no utilizada por estas referencias; no se presupone unicidad global. Si cambia el nombre, fuente o URL, la salida lo marca `sin_candidato` hasta actualizar y revisar la referencia. Un fallo de extracción permanece en cuarentena y no produce candidato.
+ISSSTE se lee en Windows-1252, verifica el hash original y se valida con un esquema propio de Pandera. La clave se mantiene como texto y el grano es **clave + nivel de atención**: una misma clave con niveles distintos se conserva en filas diferentes. Los conflictos de clave y nivel duplicados se envían a cuarentena. Cuatro claves de la captura aparecen en notación científica; se rechazan sin inventar los dígitos originales. El valor `0` de indicaciones se conserva tal como llega: no se interpreta como indicación clínica ni se imputa.
 
-La salida `correspondencias.csv` contiene una fila por captura y referencia aplicable: fuente, URL, producto, fecha, archivo y SHA-256 dental; `apta_plata` indica el resultado de la puerta; clave, descripción, unidad y SHA-256 del catálogo; estado, tipo de relación, coincidencias, diferencias, evidencia, revisor y fecha. Una captura sin referencia recibe una fila `sin_candidato`. Si hay varias referencias explícitas aplicables se genera una fila por cada una. La tabla no contiene precios y **no modifica Plata ni la cuarentena**; una fila con `apta_plata=no` solo documenta un candidato y no autoriza usar su precio.
+La tabla [correspondencias de referencia](../../datos/referencias/correspondencias_issste.csv) mantiene candidatos con fuente, URL, producto, clave, coincidencias, diferencias y evidencia. Solo una decisión humana `revisada` y `exacta`, con nombre, fecha y hashes de ambas fuentes vigentes, se incorpora como `clave_issste_verificada` a la oferta en Oro. Si cambia un hash, la decisión requiere revalidación. Si una oferta acumula claves exactas incompatibles, Oro marca `conflicto_correspondencias` y no elige ninguna. Ninguna de las correspondencias iniciales es exacta aprobada: el kit ISSSTE 5006810001 no se equipara automáticamente a una jeringa individual.
 
-Hay tres referencias para la clave **5006810001**: dos ofertas de resina Filtek y una jeringa Dentalink. Están marcadas `pendiente` / `candidato_parcial`: el ISSSTE describe un **kit** de varias jeringas y otros componentes, no una pieza individual. En Dentalink el tono A2B no se ha demostrado equivalente al A2 del kit; para Tu Universo Dental tampoco se han confirmado peso y variante. Las tarjetas adicionales de Imdent no tienen correspondencia aprobada y se marcan `sin_candidato` salvo que una referencia coincida exactamente en fuente, URL y nombre. Las coincidencias y diferencias son indicios documentados, no un dictamen clínico o comercial.
+La unión en Oro homologa nombres y tipos al esquema común y marca `tipo_registro`; las filas ISSSTE dejan el precio vacío porque la fuente no lo publica. No se asigna un precio comercial a una clave institucional por semejanza textual. Se preservan por separado los originales, la cuarentena y toda la historia de Plata.
 
-### Procedimiento de revisión
+## Faltantes e imputación
 
-1. Abrir la descripción de la clave ISSSTE y la página original indicada; comprobar fecha y disponibilidad de la evidencia. Comparar tipo, características, marca cuando aplique, variante, peso, cantidad y contenido de la presentación. Un GTIN verificable puede ayudar si ambas fuentes lo publican, pero no se debe inventar.
-2. Editar la fila de referencias con las coincidencias, diferencias y evidencia concreta. La identidad de la oferta debe conservar fuente, URL y nombre exactos; la clave ISSSTE se conserva como texto. Agregar otra fila si hay más de una clave candidata.
-3. Solo tras una revisión humana, cambiar `estado_revision` a `revisada`, seleccionar `tipo_relacion` entre `exacta`, `compatible_parcial` o `descartada`, registrar el nombre del revisor y `fecha_revision` en formato `AAAA-MM-DD`, y copiar los hashes `sha256` dental y `sha256_catalogo_issste` de la fila revisada a `sha256_producto_revisado` y `sha256_catalogo_revisado` en la referencia. Un estado `pendiente` requiere `candidato_parcial` y campos de revisión y hashes vacíos. Si cambia cualquiera de los archivos, la salida rebaja esa revisión a `pendiente_revalidacion` / `candidato_parcial`; exige nueva revisión. El programa comprueba estos campos, pero no puede verificar que el revisor o la evidencia sean auténticos.
-4. Ejecutar nuevamente pruebas y pipeline, inspeccionar `correspondencias.csv` y conservar la evidencia de la decisión. Una relación parcial o descartada no permite comparar precios. Incluso una relación marcada exacta exige comprobar presentación y condiciones antes de cualquier análisis comercial; el pipeline no realiza esa comparación.
+`diagnostico_faltantes.csv` compara tasas de precio ausente entre fuentes, tiendas y categorías. La ausencia depende de lo que cada fuente publica, del formato de oferta y de la disponibilidad; MCAR no está demostrado, MAR es una hipótesis condicionada a variables observadas y MNAR no se puede descartar. Los datos observados no permiten determinar el mecanismo de manera concluyente.
 
-Los archivos originales deben conservar sus bytes. El CSV ISSSTE se guardó con los bytes correspondientes a su manifiesto; `.gitattributes` evita que Git convierta sus finales de línea. Esta corrección restaura la representación de Bronce al hash registrado, sin alterar su contenido de origen.
+Para estudiar la imputación se prioriza la última observación válida **anterior de la misma URL y nombre**, si tiene una antigüedad de hasta siete días. La estimación conserva fecha y hash de la observación utilizada y no se interpreta como precio actual publicado. Si no existe historial suficiente, se calcula la **mediana de precios observados** de productos de la misma tienda, categoría textual y fecha UTC, usando al menos 10 URL distintas. Solo se estiman candidatos Imdent sin precio; si no hay referencia apropiada permanecen sin estimación. El importe calculado, método, tamaño de referencia, evidencia y bandera `es_imputado` se guardan en `estimaciones_cuarentena.csv`; el registro original **sigue en cuarentena**, no entra a Plata ni a Oro como cotización. Los grupos por categoría no garantizan equivalencia de marca, contenido o presentación.
 
-## Tratamiento estadístico
+La validación histórica compara cada observación con la anterior de la misma ficha, exclusivamente hacia atrás y dentro de siete días. Para la mediana, se oculta de forma determinista 20 % de URL por grupo y se estiman usando solo el 80 % restante, con al menos 10 URL de entrenamiento. Los errores de ambos métodos se guardan **por separado** en `validacion_imputacion.csv` y `resumen.json`. Para la mediana, con menos de 5 casos de validación el diagnóstico es `evidencia_insuficiente`; con MAPE mayor a 30 % se marca `error_alto`. Este umbral es una alarma descriptiva, no una garantía.
 
-- **Faltantes:** `resumen.json` cuantifica nulos de los candidatos extraídos antes de la puerta. Hay precios ausentes por ofertas agregadas y por tarjetas sin precio o sin precio identificable en MXN. Su ausencia puede depender de la fuente o de la publicación; no se puede identificar concluyentemente MCAR/MAR/MNAR con los datos disponibles. No se imputan cotizaciones, identificadores, fechas, moneda ni producto; la imputación queda pendiente de una variable y datos adecuados.
-- **Atípicos y ruido:** IQR con límites Q1 − 1.5 IQR y Q3 + 1.5 IQR solo se calcula con al menos 8 observaciones válidas de la misma URL y con IQR positivo; en otro caso se deja sin determinar. Las marcas conservan el valor original y requieren revisión; no se recortan ni eliminan precios automáticamente.
-- **Escalado:** Min-Max `(x-min)/(max-min)` y Z-Score `(x-media)/desviación poblacional`, calculados para observaciones válidas de la misma URL; si el denominador es cero se deja nulo. Son exploratorios y dependen del lote; no se mezclan precios de productos distintos ni son parámetros entrenados para predicción.
-- **Discretización y jerarquía:** bandas en MXN (0–500, >500–1000 y >1000); la jerarquía conservadora es salud > insumos > categoría sin verificar. Los límites son descriptivos arbitrarios, no categorías comerciales validadas.
-- **Reducción:** la extracción selecciona los campos necesarios del HTML y los proyecta al esquema canónico de Plata; conserva URL, fecha, ruta y hash para trazabilidad. Se incluyen solo las observaciones que superaron la puerta, sin borrar Bronce ni cuarentena. No se agregan precios de productos cuya equivalencia no se ha verificado. Con tan pocos datos el muestreo o agregar por proveedor no sería representativo.
+En la ejecución local de referencia se generaron **14 estimaciones por mediana**: 8 con evidencia insuficiente y 6 con error alto. Los 128 precios ocultados de esa prueba dieron un MAPE aproximado de **137.6 %**. La validación histórica comparó 2,088 pares y obtuvo 0 % de error en estas capturas cercanas, sin que hubiera un faltante apto para ese método; dos capturas sin cambio de precio no prueban precisión futura. Las estimaciones son exploratorias y no deben utilizarse para decisiones de compra.
 
-## Resultado de referencia y límites
+## Atípicos, escalado, discretización y reducción
 
-El resultado depende de las capturas disponibles. Antes de la ampliación, las dos capturas dentales versionadas daban 6 entradas, 4 válidas y 2 en cuarentena. Las capturas ampliadas se conservan localmente o como artefactos; consultar `resumen.json` y los manifiestos para conocer su cobertura y estado. La cantidad de registros no demuestra historial suficiente para pronósticos, equivalencia entre productos, entrega en Colima ni inventario. Revisar condiciones de uso de las fuentes antes de publicar los datos. El tag `e1` permanece en el commit anterior y no incluye automáticamente esta ampliación.
+- Las categorías textuales conservadoras reconocen guantes, gasas, cubrebocas, resinas, adhesivos, desinfección, fresas rotatorias, limas, cementos, ionómeros, material de impresión, instrumental, higiene preventiva, jeringas y agujas, y anestesia; el resto queda `sin_clasificar`. La jerarquía es `salud > insumos > categoría`; es una regla heurística, no clasificación clínica validada.
+- Min-Max y Z-Score de grupo usan ofertas de la misma tienda, categoría y fecha UTC con al menos 10 URL distintas. Se registran en `precio_minmax_grupo` y `precio_zscore_grupo`; si no hay variación se dejan vacíos. Los grupos no garantizan presentaciones equivalentes y las escalas son exploratorias.
+- IQR se calcula con al menos 20 URL distintas y rango intercuartílico positivo en esos mismos grupos. `atipico_iqr_grupo` marca límites de 1.5 IQR. `precio_suavizado_exploratorio` limita al intervalo IQR para análisis; `precio` conserva siempre el valor publicado. Una marca no prueba que el dato sea incorrecto y requiere revisión.
+- `banda_precio_mxn` discretiza en hasta 500, más de 500 hasta 1,000 y más de 1,000 MXN; son límites descriptivos arbitrarios.
+- Oro selecciona la última observación válida por URL comercial y conserva los registros ISSSTE por clave y nivel. `oro_reduccion.json` compara cantidades de entrada y salida. La reducción no borra las observaciones históricas de Plata ni agrupa precios de artículos no equivalentes.
+
+## Evidencia y límites
+
+En la ejecución local `20261113T055623405929Z`, realizada con dos juegos de capturas de cuatro tiendas y el piloto previo, se procesaron **4,356 observaciones comerciales: 4,178 válidas y 178 en cuarentena**. El catálogo ISSSTE aportó **1,579 filas válidas y 4 rechazadas**; Oro integró **3,667 filas**. Las cifras dependen de las capturas presentes: las filas no son productos independientes y los resultados remotos pueden diferir. El pipeline no prueba inventario, entrega en Colima, equivalencia de productos ni autorización para reutilizar contenido. Revisar condiciones de uso antes de publicar.
+
+La entrega requiere el tag `e1` apuntando al commit final verificado. El formulario oficial todavía no existe según la información proporcionada; registrar el enlace cuando esté disponible.

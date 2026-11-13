@@ -9,8 +9,8 @@ El 12 de noviembre de 2026 una ejecución local capturó las tres páginas y gua
 - [Estado de la entrega](docs/E0/ENTREGA.md)
 - [Objetivos de calidad](calidad/objetivos.md)
 
-La arquitectura prevista es Bronce (datos originales), Plata (validación y homologación) y Oro (comparaciones).
+La arquitectura utiliza Bronce (datos originales), Plata (validación y homologación) y Oro (inventario y conteos).
 
-La [entrega E1](docs/E1/ENTREGA.md) incorpora un pipeline reproducible hasta Plata, validación Pandera y cuarentena. Las variantes y condiciones aún no se han comprobado como equivalentes. La [relatoría](docs/relatoria-E1.md) describe resultados y pendientes.
+La [entrega E1](docs/E1/ENTREGA.md) incorpora un pipeline reproducible hasta Plata y Oro, validación Pandera, cuarentena y estimaciones exploratorias separadas. Las variantes y condiciones aún no se han comprobado como equivalentes. La [relatoría](docs/relatoria-E1.md) describe resultados y pendientes.
 
 La captura ampliada de cuatro tiendas mexicanas de Imdent se ejecuta con `python -m scripts.captura_imdent`; después, `python -m src.e1` procesa los archivos descargados. Véanse el alcance, la cuarentena y las limitaciones en la ficha E1.

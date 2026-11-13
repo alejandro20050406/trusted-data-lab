@@ -12,11 +12,15 @@ import pandera.pandas as pa
 from bs4 import BeautifulSoup
 from src.correspondencias import cargar_catalogo, cargar_referencias, generar_correspondencias
 from src.catalogo_imdent import extraer_listado
+from src.dentalink import extraer_precio_principal
+from src.validacion_e1 import url_https_valida
+from src.preprocesamiento_e1 import enriquecer, estimar_faltantes, validar_imputacion, diagnosticar_faltantes
+from src.integracion_oro import ISSSTE_SCHEMA, procesar_issste, construir_oro
 
 
 SCHEMA = pa.DataFrameSchema({
     'fuente': pa.Column(str, pa.Check.str_length(min_value=1)),
-    'url': pa.Column(str, pa.Check.str_matches(r'^https://')),
+    'url': pa.Column(str, pa.Check(lambda s: s.map(url_https_valida))),
     'fecha_utc': pa.Column(str, pa.Check(lambda s: s.map(fecha_valida))),
     'archivo': pa.Column(str, pa.Check.str_length(min_value=1)),
     'sha256': pa.Column(str, pa.Check.str_matches(r'^[0-9a-f]{64}$')),
@@ -116,7 +120,7 @@ def transformar(filas):
 
 
 def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None, imdent_bronce=None):
-    filas, cuarentena, registros, capturas_imdent = [], [], {}, []
+    filas, cuarentena, registros, capturas_imdent, detalles = [], [], {}, [], {}
     manifiestos = sorted(bronce.glob('*/manifiesto.json'))
     if not manifiestos:
         raise ValueError('No se encontraron manifiestos Bronce')
@@ -136,7 +140,13 @@ def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None, imdent_br
                     raise ValueError('SHA-256 no coincide con el manifiesto')
                 fila = {'fuente': entrada['fuente'], 'url': entrada['url'], 'fecha_utc': entrada['consultado_utc'],
                         'archivo': str((manifiesto.parent / nombre).as_posix()), 'sha256': entrada['sha256']}
-                fila.update(extraer_producto(datos.decode('utf-8', errors='strict')))
+                html = datos.decode('utf-8', errors='strict')
+                extraido = extraer_producto(html)
+                if entrada['fuente'] == 'dentalink_market' and extraido['precio'] is None:
+                    detalle = extraer_precio_principal(html, extraido['producto'], extraido['moneda'])
+                    extraido['precio'] = detalle['precio']
+                    detalles[id(fila)] = detalle
+                fila.update(extraido)
                 filas.append(fila)
             except (KeyError, ValueError, OSError, UnicodeError) as error:
                 cuarentena.append({'registro': entrada, 'manifiesto': str(manifiesto), 'motivo': str(error)})
@@ -182,15 +192,50 @@ def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None, imdent_br
     for rechazo in rechazados:
         rechazo['registro_origen'] = registros.get(id(rechazo['registro']), '')
     cuarentena.extend(rechazados)
-    correspondencias = None
+    correspondencias = []
+    issste_validos, issste_rechazados = [], []
     if catalogo_manifest is not None and referencias is not None:
         catalogo, hash_catalogo = cargar_catalogo(catalogo_manifest)
         correspondencias = generar_correspondencias(filas, validos, catalogo, cargar_referencias(referencias), hash_catalogo)
+        issste_validos, issste_rechazados = procesar_issste(catalogo_manifest)
     salida.mkdir(parents=True, exist_ok=False)
     (salida / 'cuarentena.json').write_text(json.dumps(cuarentena, ensure_ascii=False, indent=2, default=str), encoding='utf-8')
-    plata = transformar([{**fila, 'registro_origen': registros.get(id(fila), '')} for fila in validos])
+    enriquecidos = [{**fila, 'registro_origen': registros.get(id(fila), ''),
+                     'vendedor': detalles.get(id(fila), {}).get('vendedor', ''),
+                     'disponibilidad': detalles.get(id(fila), {}).get('disponibilidad', 'no_verificada')}
+                    for fila in validos]
+    plata = enriquecer(transformar(enriquecidos))
     plata.to_csv(salida / 'plata.csv', index=False, encoding='utf-8-sig')
-    if correspondencias is not None:
+    pd.DataFrame(issste_validos, columns=list(ISSSTE_SCHEMA.columns)).to_csv(
+        salida / 'plata_issste.csv', index=False, encoding='utf-8-sig')
+    (salida / 'cuarentena_issste.json').write_text(
+        json.dumps(issste_rechazados, ensure_ascii=False, indent=2, default=str), encoding='utf-8')
+    diagnostico = diagnosticar_faltantes(filas)
+    pd.DataFrame(diagnostico, columns=['fuente', 'tienda', 'categoria', 'total',
+                                      'precio_faltante', 'porcentaje_faltante']).to_csv(
+        salida / 'diagnostico_faltantes.csv', index=False, encoding='utf-8-sig')
+    estimaciones = estimar_faltantes(plata, cuarentena)
+    columnas_estimacion = ['fuente', 'url', 'producto', 'fecha_utc', 'categoria', 'archivo', 'sha256',
+                           'registro_origen', 'precio_original', 'precio_estimado_mxn', 'es_imputado',
+                           'metodo', 'n_referencias', 'fecha_observacion_referencia', 'sha256_observacion_referencia',
+                           'validacion_n', 'validacion_mape_porcentaje',
+                           'diagnostico_confiabilidad', 'motivo_cuarentena', 'advertencia']
+    pd.DataFrame(estimaciones, columns=columnas_estimacion).to_csv(
+        salida / 'estimaciones_cuarentena.csv', index=False, encoding='utf-8-sig')
+    validacion = validar_imputacion(plata)
+    columnas_validacion = ['tienda', 'categoria', 'fecha_grupo', 'url_oculta', 'precio_observado',
+                           'precio_estimado_validacion', 'error_absoluto', 'error_porcentual',
+                           'n_entrenamiento', 'metodo', 'fecha_utc_objetivo', 'fecha_utc_referencia', 'sha256_referencia']
+    pd.DataFrame(validacion, columns=columnas_validacion).to_csv(
+        salida / 'validacion_imputacion.csv', index=False, encoding='utf-8-sig')
+    validacion_mediana = [x for x in validacion if x['metodo'] == 'mediana_tienda_categoria_dia']
+    validacion_historial = [x for x in validacion if x['metodo'] == 'ultima_observacion_misma_url_7d']
+    oro, metricas, reduccion = construir_oro(plata, issste_validos, correspondencias)
+    oro.to_csv(salida / 'oro_inventario.csv', index=False, encoding='utf-8-sig')
+    metricas.to_csv(salida / 'oro_metricas.csv', index=False, encoding='utf-8-sig')
+    (salida / 'oro_reduccion.json').write_text(
+        json.dumps(reduccion, ensure_ascii=False, indent=2), encoding='utf-8')
+    if catalogo_manifest is not None and referencias is not None:
         columnas = ['fuente', 'url', 'producto', 'fecha_utc', 'archivo', 'sha256', 'apta_plata',
                     'clave_issste', 'descripcion_issste', 'unidad_issste', 'sha256_catalogo_issste',
                     'estado_revision', 'tipo_relacion', 'coincidencias', 'diferencias', 'evidencia',
@@ -198,6 +243,14 @@ def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None, imdent_br
         pd.DataFrame(correspondencias, columns=columnas).to_csv(salida / 'correspondencias.csv', index=False, encoding='utf-8-sig')
     resumen = {'entradas': len(filas) + len(cuarentena) - len(rechazados), 'validos': len(validos), 'cuarentena': len(cuarentena),
                'urls_unicas_validas': len({fila['url'] for fila in validos}), 'capturas_imdent': capturas_imdent,
+               'issste_validos': len(issste_validos), 'issste_cuarentena': len(issste_rechazados),
+               'oro_filas': len(oro), 'imputaciones_exploratorias': sum(bool(x['es_imputado']) for x in estimaciones),
+               'validacion_imputacion_n': len(validacion_mediana),
+               'validacion_imputacion_mae': (sum(x['error_absoluto'] for x in validacion_mediana) / len(validacion_mediana) if validacion_mediana else None),
+               'validacion_imputacion_mape': (sum(x['error_porcentual'] for x in validacion_mediana) / len(validacion_mediana) if validacion_mediana else None),
+               'validacion_historial_n': len(validacion_historial),
+               'validacion_historial_mape': (sum(x['error_porcentual'] for x in validacion_historial) / len(validacion_historial) if validacion_historial else None),
+               'atipicos_grupo': int(plata['atipico_iqr_grupo'].fillna(False).sum()),
                'faltantes_candidatos': pd.DataFrame(filas).isna().sum().astype(int).to_dict() if filas else {},
                'nota': 'Estadística exploratoria; productos y condiciones no verificados como equivalentes.'}
     (salida / 'resumen.json').write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding='utf-8')
