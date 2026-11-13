@@ -6,6 +6,8 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'datos/bronce/odontologia/**'
+      - 'datos/bronce/issste_insumos/**'
+      - 'datos/referencias/**'
       - 'requirements-e1.txt'
       - '.github/workflows/e1.yml'
 jobs:

@@ -9,6 +9,7 @@ from pathlib import Path
 import pandas as pd
 import pandera.pandas as pa
 from bs4 import BeautifulSoup
+from src.correspondencias import cargar_catalogo, cargar_referencias, generar_correspondencias
 
 
 SCHEMA = pa.DataFrameSchema({
@@ -96,7 +97,7 @@ def transformar(filas):
     return df
 
 
-def ejecutar(bronce, salida):
+def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None):
     filas, cuarentena = [], []
     manifiestos = sorted(bronce.glob('*/manifiesto.json'))
     if not manifiestos:
@@ -123,6 +124,10 @@ def ejecutar(bronce, salida):
                 cuarentena.append({'registro': entrada, 'manifiesto': str(manifiesto), 'motivo': str(error)})
     validos, rechazados = validar_filas(filas)
     cuarentena.extend(rechazados)
+    correspondencias = None
+    if catalogo_manifest is not None and referencias is not None:
+        catalogo, hash_catalogo = cargar_catalogo(catalogo_manifest)
+        correspondencias = generar_correspondencias(filas, validos, catalogo, cargar_referencias(referencias), hash_catalogo)
     salida.mkdir(parents=True, exist_ok=False)
     (salida / 'cuarentena.json').write_text(json.dumps(cuarentena, ensure_ascii=False, indent=2, default=str), encoding='utf-8')
     plata = pd.DataFrame(validos, columns=list(SCHEMA.columns))
@@ -133,6 +138,12 @@ def ejecutar(bronce, salida):
         oro = oro[['fuente', 'fecha_utc', 'sha256', 'precio', 'precio_minmax',
                    'precio_zscore', 'atipico_iqr', 'banda_precio_mxn', 'jerarquia']]
     oro.to_csv(salida / 'oro_exploratorio.csv', index=False, encoding='utf-8')
+    if correspondencias is not None:
+        columnas = ['fuente', 'url', 'producto', 'fecha_utc', 'archivo', 'sha256', 'apta_plata',
+                    'clave_issste', 'descripcion_issste', 'unidad_issste', 'sha256_catalogo_issste',
+                    'estado_revision', 'tipo_relacion', 'coincidencias', 'diferencias', 'evidencia',
+                    'revisor', 'fecha_revision']
+        pd.DataFrame(correspondencias, columns=columnas).to_csv(salida / 'correspondencias.csv', index=False, encoding='utf-8')
     resumen = {'entradas': len(filas) + len(cuarentena) - len(rechazados), 'validos': len(validos), 'cuarentena': len(cuarentena),
                'faltantes_candidatos': pd.DataFrame(filas).isna().sum().astype(int).to_dict() if filas else {},
                'nota': 'Estadística exploratoria; productos y condiciones no verificados como equivalentes.'}
@@ -144,9 +155,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--bronce', type=Path, default=Path('datos/bronce/odontologia'))
     parser.add_argument('--salida', type=Path, default=None)
+    parser.add_argument('--catalogo', type=Path, default=Path('datos/bronce/issste_insumos/20261113T015745409442Z/manifiesto.json'))
+    parser.add_argument('--referencias', type=Path, default=Path('datos/referencias/correspondencias_issste.csv'))
     args = parser.parse_args()
     salida = args.salida or Path('datos/e1') / dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-    print(json.dumps(ejecutar(args.bronce, salida), ensure_ascii=False, indent=2))
+    print(json.dumps(ejecutar(args.bronce, salida, args.catalogo, args.referencias), ensure_ascii=False, indent=2))
     print(f'Salida: {salida}')
 
 
