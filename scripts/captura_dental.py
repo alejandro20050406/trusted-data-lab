@@ -3,7 +3,11 @@ import datetime as dt
 import hashlib
 import json
 import re
+import socket
+import ssl
 import sys
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import urllib.robotparser
@@ -22,13 +26,38 @@ class SinRedireccion(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def obtener(url):
+def _obtener_una_vez(url):
     solicitud = urllib.request.Request(url, headers={'User-Agent': AGENTE, 'Accept': 'text/html,text/plain'})
     with urllib.request.build_opener(SinRedireccion).open(solicitud, timeout=30) as respuesta:
         datos = respuesta.read(5_000_001)
         if len(datos) > 5_000_000:
             raise ValueError('Respuesta supera 5 MB')
         return datos, respuesta.headers.get_content_type(), respuesta.geturl()
+
+
+def _error_transitorio(error):
+    if isinstance(error, urllib.error.HTTPError):
+        return error.code in {500, 502, 503, 504}
+    if isinstance(error, urllib.error.URLError):
+        error = error.reason
+    if isinstance(error, socket.gaierror):
+        return error.errno == socket.EAI_AGAIN
+    return isinstance(error, (ssl.SSLEOFError, TimeoutError, ConnectionResetError,
+                              ConnectionAbortedError))
+
+
+def obtener(url):
+    # Nunca se desactiva la verificación de certificados ni se evaden rechazos HTTP.
+    for intento in range(4):
+        try:
+            return _obtener_una_vez(url)
+        except (OSError, urllib.error.URLError) as error:
+            if intento == 3 or not _error_transitorio(error):
+                raise
+            espera = 2 ** (intento + 1)
+            print(f'Reintentando conexión transitoria ({intento + 1}/3) en {espera}s: {type(error).__name__}',
+                  file=sys.stderr, flush=True)
+            time.sleep(espera)
 
 
 def permitido(texto, url):

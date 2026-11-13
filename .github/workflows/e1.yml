@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'scripts/**'
       - 'tests/**'
       - 'datos/bronce/odontologia/**'
       - 'datos/bronce/issste_insumos/**'
@@ -12,7 +13,7 @@ on:
       - '.github/workflows/e1.yml'
 jobs:
   pipeline:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,9 +21,22 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r requirements-e1.txt
       - run: python -m unittest discover -s tests
-      - run: python -m src.e1 --salida salida-e1
+      - name: Capturar catálogo Imdent
+        id: imdent
+        run: python -m scripts.captura_imdent
+      - name: Generar Plata
+        if: always() && steps.imdent.outcome != 'skipped'
+        run: python -m src.e1 --salida salida-e1
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: capas-e1
           path: salida-e1/
           retention-days: 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: imdent-bronce
+          path: datos/bronce/imd_catalogo/
+          retention-days: 90
+          if-no-files-found: warn

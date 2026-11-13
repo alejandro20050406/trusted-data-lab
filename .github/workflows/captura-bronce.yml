@@ -25,8 +25,12 @@ jobs:
       - name: Capturar páginas públicas
         id: captura
         run: python scripts/captura_dental.py
+      - name: Capturar catálogo Imdent
+        id: catalogo
+        if: always() && steps.pruebas.outcome == 'success'
+        run: python -m scripts.captura_imdent
       - name: Validar y generar Plata
-        if: always() && steps.pruebas.outcome == 'success' && steps.captura.outcome != 'skipped'
+        if: always() && steps.pruebas.outcome == 'success' && steps.catalogo.outcome != 'skipped'
         run: python -m src.e1 --salida salida-e1
       - name: Guardar resultados E1
         if: always()
@@ -41,6 +45,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: odontologia-bronce-${{ github.run_id }}-${{ github.run_attempt }}
-          path: datos/bronce/odontologia/
+          path: |
+            datos/bronce/odontologia/
+            datos/bronce/imd_catalogo/
           retention-days: 90
           if-no-files-found: warn
