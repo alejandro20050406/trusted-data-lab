@@ -3,6 +3,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import sys
 import time
 from pathlib import Path
 from urllib.parse import urljoin
@@ -57,6 +58,7 @@ def capturar(destino, pausa=1.5, max_paginas=100, base=BASE):
             raise ValueError(f'Cobertura incompleta: {detectados} tarjetas frente a {total} anunciadas')
         estado = 'completa'
     except (OSError, ValueError, UnicodeError) as error:
+        print(f'Error al capturar {url}: {type(error).__name__}: {error}', file=sys.stderr, flush=True)
         if pendiente is None:
             pendiente = {'fuente': 'imdent_catalogo', 'url': url, 'estado': 'error',
                          'consultado_utc': dt.datetime.now(dt.timezone.utc).isoformat()}
