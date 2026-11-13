@@ -1,6 +1,6 @@
 # Observatorio de Abastecimiento Inteligente para Consultorios de Colima
 
-**Estado:** propuesta E0; entrevista simulada y captura piloto de fuentes odontológicas. La ampliación a insumos médicos generales está en planeación.
+**Estado:** propuesta E0; entrevista y captura piloto de fuentes odontológicas. La ampliación a insumos médicos generales está en planeación.
 
 ## Ficha del observatorio
 
@@ -32,7 +32,7 @@ El proyecto se orienta a un posible proveedor de insumos que combine informació
 5. **¿Le resultaría útil un proveedor que, además de venderle productos, analizara su consumo y le ayudara a anticipar cuándo necesita realizar un nuevo pedido? ¿Por qué?**  
    **Amaranta:** Sí podría ser útil para planear pedidos y reducir urgencias, siempre que permita revisar las recomendaciones y considere cambios en la demanda, tiempos de entrega y productos apropiados para el consultorio.
 
-**Hipótesis para validar:** comparar presentaciones y costos completos puede consumir tiempo; la disponibilidad y la confianza pueden importar tanto como el precio; y prever pedidos podría aportar valor. 
+**Hipótesis para validar:** comparar presentaciones y costos completos puede consumir tiempo; la disponibilidad y la confianza pueden importar tanto como el precio; y prever pedidos podría aportar valor.
 
 ## Preguntas analíticas
 
@@ -51,4 +51,3 @@ No se recopilarán datos de pacientes ni información sensible. Antes de automat
 ## Calidad y ejecución
 
 Se proponen metas de al menos 95 % de ejecuciones programadas exitosas, al menos 95 % de registros con campos obligatorios completos y menos de 2 % de duplicados después de validar. Los denominadores y campos aplicables se detallan en [objetivos de calidad](../../calidad/objetivos.md); todavía no se han medido. Cada integrante registrará sus tiempos y defectos reales en los archivos PSP existentes.
-
