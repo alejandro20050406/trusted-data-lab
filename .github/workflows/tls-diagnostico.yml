@@ -1,0 +1,32 @@
+name: Diagnostico TLS temporal
+on:
+  push:
+    paths:
+      - '.github/workflows/tls-diagnostico.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  comprobar:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Comprobar TLS verificado
+        shell: bash
+        run: |
+          set +e
+          echo '=== urllib predeterminado ==='
+          python -c "import urllib.request; r=urllib.request.urlopen(urllib.request.Request('https://imdent.com/robots.txt', headers={'User-Agent':'TrustedDataLabAcademic/1.0'}),timeout=20); print('HTTP',r.status)"
+          echo "python_exit=$?"
+          echo '=== curl TLS automatico ==='
+          curl --head --verbose --max-time 20 https://imdent.com/robots.txt
+          echo "curl_exit=$?"
+          echo '=== curl TLS 1.2 ==='
+          curl --head --verbose --tls-max 1.2 --max-time 20 https://imdent.com/robots.txt
+          echo "curl_tls12_exit=$?"
