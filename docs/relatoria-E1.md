@@ -1,0 +1,7 @@
+# Relatoría de etapa E1
+
+Se implementó una ruta reproducible desde las capturas odontológicas de Bronce hacia una puerta Pandera, Plata y una salida exploratoria Oro. Las páginas utilizan formatos de oferta diferentes: se homologaron los precios individuales y se aisló la oferta agregada sin convertir su mínimo en una cotización. Se incorporaron trazabilidad por archivo y hash, motivos de cuarentena y pruebas automatizadas.
+
+La revisión de integridad mostró que la conversión automática de finales de línea de Git en Windows alteraba los bytes de los HTML. Se añadió `.gitattributes` para preservar Bronce sin conversión; el hash registrado debe verificarse después de cualquier transferencia. Con los originales del repositorio, la ejecución de referencia procesó 6 entradas: 4 válidas y 2 en cuarentena. La muestra tiene dos fechas y no sustenta pronósticos ni una comparación comercial; se desconocen equivalencias de variantes y condiciones.
+
+El catálogo institucional ISSSTE permanece separado porque carece de precios y de una correspondencia de producto verificada. Es necesario documentar permisos y equivalencias, ampliar la captura histórica, verificar el workflow remoto y registrar tiempos y defectos reales por integrante. La ausencia de precio individual se documentó y no se imputó por el riesgo de inventar una cotización. Los indicadores estadísticos son exploratorios y no validan hipótesis de mercado.

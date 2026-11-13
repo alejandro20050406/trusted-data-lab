@@ -10,3 +10,5 @@ El 12 de noviembre de 2026 una ejecución local capturó las tres páginas y gua
 - [Objetivos de calidad](calidad/objetivos.md)
 
 La arquitectura prevista es Bronce (datos originales), Plata (validación y homologación) y Oro (comparaciones).
+
+La [entrega E1](docs/E1/ENTREGA.md) incorpora un pipeline reproducible, validación Pandera y cuarentena. Oro es exploratorio: las variantes y condiciones aún no se han comprobado como equivalentes. La [relatoría](docs/relatoria-E1.md) describe resultados y pendientes.
