@@ -1,28 +1,21 @@
-# Plan de captura: precios odontológicos
+# Máquina de captura Bronce: piloto odontológico
 
-**Captura inicial implementada.** `scripts/captura_dental.py` guarda tres páginas públicas originales y un manifiesto por ejecución en `datos/bronce/odontologia/`. El 11 de noviembre de 2026 se obtuvo una captura local exitosa por fuente.
+La captura restaurada emplea las mismas tres páginas y fuentes del piloto original:
 
-## Fuentes y viabilidad
+1. **Imdent — Depósito Dental Q Narvarte:** [resina Filtek Z350 XT](https://imdent.com/stores/deposito-dental-q-narvarte/products/resina-filtek-z350-xt-4-gr-3m). El depósito se encuentra en Ciudad de México; no se debe presentar como proveedor local.
+2. **Tu Universo Dental, Colima:** [resina dental 3M Filtek](https://www.tuuniversodental.com.mx/resina-dental-3m-filtek).
+3. **Dentalink Market México:** [jeringa de resina Z-350 XT A2B](https://dentalinkmarket.com/mx/productos/31069-jeringa-de-resina-z-350-xt-color-a2b-4g). Registrar por separado la plataforma y el vendedor efectivo.
 
-Se trabajará con tres fuentes web de precios públicos: [Imdent](https://imdent.com/stores/deposito-dental-q-narvarte?view=list), [Tu Universo Dental Colima](https://www.tuuniversodental.com.mx/) y [Dentalink Market México](https://dentalinkmarket.com/mx/precios/255-ivoclar-tetric-n-ceram-universal). Tu Universo Dental muestra precios en sus categorías y fichas. Imdent y Dentalink presentan ofertas de proveedores; conservar plataforma y vendedor por separado para detectar ofertas repetidas.
+El 12 de noviembre de 2026 la ejecución local capturó las tres páginas correctamente en `datos/bronce/odontologia/20261113T022451023084Z/`. Cada archivo conserva el HTML original; el manifiesto registra fuente, URL, fecha UTC, resultado, tamaño, SHA-256 y huella de robots.txt. Una respuesta correcta de las tres fuentes no demuestra que las variantes o presentaciones sean equivalentes, ni existencia o entrega en Colima. El 11 de noviembre de 2026 hubo también una [ejecución manual correcta en GitHub](https://github.com/alejandro20050406/trusted-data-lab/actions/runs/43077854266).
 
-Realizar primero una prueba piloto de tres productos idénticos entre al menos dos proveedores, verificando marca, variante y presentación. Registrar URL, titular, acceso, formato, condiciones de uso, restricciones de robots, frecuencia permitida y fecha de revisión. Una página pública no implica automáticamente autorización para extracción o reutilización. No se han confirmado descargas estructuradas, permisos de automatización ni un historial de 36 periodos de precios para las tres fuentes. Si el acceso automático no es viable, ajustar el alcance con los docentes.
+## Ejecución y automatización
 
-## Capas propuestas
+Desde la raíz del proyecto: `python scripts/captura_dental.py`. Para ejecutar las pruebas: `python -m unittest discover -s tests`. El extractor revisa robots.txt antes de cada página, limita el tamaño, no sigue redirecciones y registra fallos sin inventar precios.
 
-1. **Bronce:** conservar respuesta original por fuente y fecha, sin sobrescribir capturas anteriores; registrar URL, fecha UTC, identificador, resultado y huella SHA-256.
-2. **Plata:** extraer nombre, marca, variante, presentación, cantidad, unidad, precio en MXN, proveedor, ubicación, enlace, fecha, disponibilidad, promoción y condiciones conocidas. Validar precio positivo y finito, fecha válida, unidad y cantidad positivas; registrar rechazados y duplicados. Mantener valores originales y no inventar faltantes.
-3. **Oro:** relacionar ofertas solo cuando producto, marca, variante y presentación sean equivalentes. Calcular precio por pieza, gramo o mililitro cuando proceda y estadísticas por producto y proveedor. Mantener por separado envío e impuestos desconocidos; nunca asumir que son cero. Etiquetar localidad del proveedor y destino; no confundir disponibilidad nacional con existencia local.
+`.github/workflows/captura-bronce.yml` está configurado para ejecutarse diariamente a las 12:23 UTC y manualmente. Guarda los datos como artefactos durante 90 días, por lo que deben conservarse antes de que caduquen. La ejecución programada aún no se ha observado; el archivo debe estar en la rama predeterminada para que funcione. El flujo no acumula automáticamente los artefactos.
 
-## Ejecución y limitaciones
+Antes de reutilizar o publicar contenido de los proveedores deben revisarse sus términos y permisos; robots.txt por sí solo no concede licencia. Las páginas y condiciones pueden cambiar. La captura del ISSSTE permanece como antecedente separado, no como fuente de esta máquina.
 
-El extractor solicita una página por fuente y comprueba robots.txt antes de cada consulta; no accede a cuentas ni evade restricciones. El 11 de noviembre de 2026 las rutas seleccionadas estaban permitidas por robots.txt. Los términos y condiciones de reutilización siguen sujetos a revisión; el robots.txt por sí solo no concede una licencia. Solo se almacenan respuestas públicas originales y metadatos; se verificará el uso permitido antes de republicar su contenido.
+## Alcance y pendientes
 
-Ejecutar desde la raíz: `python scripts/captura_dental.py`; ejecutar pruebas: `python -m unittest discover -s tests`. Cada ejecución crea una carpeta con instante UTC, tres HTML y un manifiesto con fuente, URL, fecha, resultado, tamaño y SHA-256. Un fallo produce estado de error y código de salida distinto de cero; no se crean datos de precios inexistentes.
-
-El flujo de GitHub Actions está configurado para ejecutarse diariamente a las 12:23 UTC (06:23 en Colima) y manualmente, ejecutar pruebas y guardar el resultado como artefacto por 90 días. Cada ejecución genera un artefacto independiente, no acumula automáticamente los anteriores. Descargar y conservar los artefactos antes de su vencimiento. Para que la programación funcione debe existir en la rama predeterminada y comprobarse una ejecución real; la prueba local no demuestra que Actions esté funcionando.
-
-**Verificación del 11 de noviembre de 2026:** los primeros intentos en GitHub fallaron al conectar por TLS con el archivo robots.txt de Imdent. Tras seleccionar Ubuntu 24.04, una [ejecución manual](https://github.com/alejandro20050406/trusted-data-lab/actions/runs/43077854266) completó las pruebas y capturó las tres fuentes. El cambio de entorno coincide con la mejora, pero una sola ejecución no demuestra la causa del fallo previo ni garantiza disponibilidad futura. La verificación TLS y robots.txt permanecen activas; la programación diaria aún no ha sido observada.
-
-La captura inicial equivale a **un periodo observado**, no a 36. Alcanzar 36 observaciones diarias requiere 35 días adicionales después de la primera, siempre que todas las ejecuciones tengan éxito. La página de Imdent no identifica el tono y la de Tu Universo Dental contiene variantes; Dentalink muestra A2B sin existencia. Los precios de las tres páginas no deben tratarse todavía como una comparación de variantes idénticas. No hay capa Plata ni tablero.
-
+Las páginas son una muestra odontológica, no una cobertura del mercado médico general. No existe todavía una capa Plata que homologue productos ni una capa Oro de indicadores. Verificar marca, variante, presentación, envío y vendedor real antes de comparar precios. De acuerdo con la indicación compartida del profesor, E0 no requiere 36 periodos; los datos actuales tampoco bastan por sí solos para un pronóstico robusto.

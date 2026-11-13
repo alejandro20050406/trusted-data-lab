@@ -1,18 +1,15 @@
-# Estado de la entrega E0 — cambio a insumos odontológicos
+# Entrega E0 — Observatorio de Abastecimiento Inteligente para Consultorios de Colima
 
-El proyecto se replanteó como un comparador de precios para profesionales de Colima y Villa de Álvarez. Las fuentes seleccionadas son Imdent, Tu Universo Dental Colima y Dentalink Market México. [La propuesta](propuesta.md) contiene pregunta, usuario, alcance, entrevista simulada, preguntas analíticas y fuentes. [El plan de captura](captura-bronce.md) describe capas y controles previstos.
+**Integrantes:** Adrián y Ángel. **Repositorio:** [trusted-data-lab](https://github.com/alejandro20050406/trusted-data-lab).
 
-## Lo que existe
+La [propuesta](propuesta.md) plantea el abastecimiento para consultorios médicos y dentales, una entrevista simulada con la dentista Amaranta, preguntas E1, E2 y E3 y un plan de fuentes. La simulación no sustituye una entrevista de campo real.
 
-- Documentación de la nueva propuesta y entrevista simulada, sin atribuir respuestas reales a Amaranta.
-- Existe un extractor odontológico y una captura local de las tres fuentes. En GitHub, una ejecución manual con Ubuntu 24.04 capturó las tres fuentes tras fallos anteriores de conexión TLS con Imdent. La programación diaria aún no ha sido observada.
+## Máquina de captura
 
-## Pendiente
+- El piloto odontológico captura las fuentes originales: Imdent, Tu Universo Dental y Dentalink Market. El 12 de noviembre de 2026 se verificó localmente una captura correcta de las tres páginas.
+- Ejecutar `python scripts/captura_dental.py` desde la raíz del proyecto. Las pruebas se ejecutan con `python -m unittest discover -s tests`.
+- El flujo `.github/workflows/captura-bronce.yml` está configurado para ejecución diaria y manual. Una ejecución manual en GitHub funcionó el 11 de noviembre de 2026; todavía no se ha observado una ejecución programada.
+- La captura institucional previa del ISSSTE se conserva como antecedente separado. DENUE y las fuentes de precios para otras especialidades siguen pendientes. Ver [plan de captura](captura-bronce.md).
+- Según la indicación compartida del profesor, no se requieren 36 periodos para E0. No se afirma que exista historial suficiente para pronosticar.
 
-1. Entrevistar realmente a Amaranta, con consentimiento, y documentar duración y hallazgos. La simulación no satisface una entrevista real de 15 minutos.
-2. Verificar productos idénticos entre proveedores de las tres fuentes seleccionadas, permisos de automatización, entrega a la zona y posible duplicación de ofertas. Tu Universo Dental muestra precios en su web; no se ha confirmado una descarga estructurada.
-3. Verificar la ejecución programada dental y desarrollar puertas de calidad, comparación de variantes idénticas y tablero.
-4. Comprobar una ejecución real en GitHub Actions. Un cambio local no demuestra que esté activo en la rama predeterminada ni detiene una ejecución configurada en otra rama.
-5. Mantener registros PSP con tiempo y defectos reales, sin inventar actividad.
-6. Confirmar con el docente cómo cumplir los 36 periodos: hay una observación inicial y no se ha comprobado un historial previo suficiente.
-
+Los registros PSP deben reflejar actividades y defectos reales. Las [metas de calidad](../../calidad/objetivos.md) están propuestas y todavía no se han medido. Bronce conserva originales; Plata y Oro aún no están implementadas.
