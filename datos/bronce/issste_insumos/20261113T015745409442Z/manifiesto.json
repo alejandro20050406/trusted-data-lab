@@ -1,0 +1,15 @@
+{
+  "fuente": "ISSSTE - Catálogo institucional de insumos",
+  "url": "https://www.issste.gob.mx/datosabiertos/catalogoinsumos.csv",
+  "consultado_utc": "2026-11-13T01:57:45.411610+00:00",
+  "ficha": "https://www.datos.gob.mx/dataset/catalogo_institucional_insumos",
+  "licencia": "Creative Commons Atribución 4.0 según ficha de datos.gob.mx",
+  "cobertura": "Catálogo institucional mexicano; no contiene precios ni disponibilidad en Colima",
+  "robots": "robots.txt permite la descarga",
+  "estado": "ok",
+  "archivo": "catalogoinsumos.csv",
+  "bytes": 559909,
+  "sha256": "30ae02d841e767f70fef0bc1bb398fae45381e32bb1f6e2d6cbc53ef131d823d",
+  "registros": 1583,
+  "codificacion": "Windows-1252"
+}
