@@ -38,6 +38,8 @@ class E1Test(unittest.TestCase):
             summary = ejecutar(base / 'bronze', base / 'out')
             self.assertEqual((summary['entradas'], summary['validos'], summary['cuarentena']), (2, 1, 1))
             self.assertIn('fallo', (base / 'out' / 'cuarentena.json').read_text(encoding='utf-8'))
+            self.assertFalse((base / 'out' / 'oro_exploratorio.csv').exists())
+            self.assertIn('precio_minmax', (base / 'out' / 'plata.csv').read_text(encoding='utf-8'))
             (capture / 'x.html').write_text('alterado', encoding='utf-8')
             summary = ejecutar(base / 'bronze', base / 'out2')
             self.assertEqual((summary['validos'], summary['cuarentena']), (0, 2))

@@ -25,7 +25,7 @@ jobs:
       - name: Capturar páginas públicas
         id: captura
         run: python scripts/captura_dental.py
-      - name: Validar y generar Plata y Oro
+      - name: Validar y generar Plata
         if: always() && steps.pruebas.outcome == 'success' && steps.captura.outcome != 'skipped'
         run: python -m src.e1 --salida salida-e1
       - name: Guardar resultados E1

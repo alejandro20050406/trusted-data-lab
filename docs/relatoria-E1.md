@@ -1,6 +1,6 @@
 # Relatoría de etapa E1
 
-Se implementó una ruta reproducible desde las capturas odontológicas de Bronce hacia una puerta Pandera, Plata y una salida exploratoria Oro. Las páginas utilizan formatos de oferta diferentes: se homologaron los precios individuales y se aisló la oferta agregada sin convertir su mínimo en una cotización. Se incorporaron trazabilidad por archivo y hash, motivos de cuarentena y pruebas automatizadas.
+Se implementó una ruta reproducible desde las capturas odontológicas de Bronce hacia una puerta Pandera y Plata. Las páginas utilizan formatos de oferta diferentes: se homologaron los precios individuales y se aisló la oferta agregada sin convertir su mínimo en una cotización. Se incorporaron trazabilidad por archivo y hash, motivos de cuarentena y pruebas automatizadas. Las transformaciones estadísticas se conservan en Plata; E1 no genera una capa Oro.
 
 La revisión de integridad mostró que la conversión automática de finales de línea de Git en Windows alteraba los bytes de los HTML. Se añadió `.gitattributes` para preservar Bronce sin conversión; el hash registrado debe verificarse después de cualquier transferencia. Con los originales del repositorio, la ejecución de referencia procesó 6 entradas: 4 válidas y 2 en cuarentena. La muestra tiene dos fechas y no sustenta pronósticos ni una comparación comercial; se desconocen equivalencias de variantes y condiciones.
 

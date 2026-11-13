@@ -1,4 +1,4 @@
-"""Bronce dental -> puerta Pandera -> Plata y resumen exploratorio Oro."""
+"""Bronce dental -> puerta Pandera -> Plata con variables de preprocesamiento."""
 import argparse
 import datetime as dt
 import hashlib
@@ -81,7 +81,8 @@ def validar_filas(filas):
 def transformar(filas):
     df = pd.DataFrame(filas)
     if df.empty:
-        return df
+        return pd.DataFrame(columns=[*SCHEMA.columns, 'precio_minmax', 'precio_zscore',
+                                     'atipico_iqr', 'banda_precio_mxn', 'jerarquia'])
     precios = df['precio']
     minimo, maximo = precios.min(), precios.max()
     media, sigma = precios.mean(), precios.std(ddof=0)
@@ -130,14 +131,8 @@ def ejecutar(bronce, salida, catalogo_manifest=None, referencias=None):
         correspondencias = generar_correspondencias(filas, validos, catalogo, cargar_referencias(referencias), hash_catalogo)
     salida.mkdir(parents=True, exist_ok=False)
     (salida / 'cuarentena.json').write_text(json.dumps(cuarentena, ensure_ascii=False, indent=2, default=str), encoding='utf-8')
-    plata = pd.DataFrame(validos, columns=list(SCHEMA.columns))
+    plata = transformar(validos)
     plata.to_csv(salida / 'plata.csv', index=False, encoding='utf-8')
-    oro = transformar(validos)
-    if not oro.empty:
-        # Proyección analítica: el hash permite volver al registro completo en Plata.
-        oro = oro[['fuente', 'fecha_utc', 'sha256', 'precio', 'precio_minmax',
-                   'precio_zscore', 'atipico_iqr', 'banda_precio_mxn', 'jerarquia']]
-    oro.to_csv(salida / 'oro_exploratorio.csv', index=False, encoding='utf-8')
     if correspondencias is not None:
         columnas = ['fuente', 'url', 'producto', 'fecha_utc', 'archivo', 'sha256', 'apta_plata',
                     'clave_issste', 'descripcion_issste', 'unidad_issste', 'sha256_catalogo_issste',
