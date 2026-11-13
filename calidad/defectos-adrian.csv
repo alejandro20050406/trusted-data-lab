@@ -1,1 +1,4 @@
 fecha,archivo,defecto,correccion,estado
+2026-11-12,datos/bronce/issste_insumos/,"El catálogo del ISSSTE no incluye precios ni disponibilidad en Colima","Se documentó como catálogo de referencia y no como fuente de precios locales",Documentado
+2026-11-12,datos/bronce/odontologia/,"No está confirmada la equivalencia entre las presentaciones de resina capturadas","Se dejó pendiente la comparación hasta verificar marca, variante, presentación y vendedor",En revisión
+2026-11-12,docs/E0/captura-bronce.md,"La página de Imdent corresponde a un depósito en Ciudad de México y no acredita oferta local en Colima","Se aclaró que no debe presentarse como proveedor local",Documentado
