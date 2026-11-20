@@ -14,11 +14,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
+from shapely.geometry import LineString
 
 URL = 'https://overpass.openstreetmap.fr/api/interpreter'
 ROBOTS = 'https://overpass.openstreetmap.fr/robots.txt'
 AGENTE = 'TrustedDataLabAcademic/1.0'
-CONSULTA = '[out:json][timeout:25];node["amenity"="dentist"](19.20,-103.78,19.30,-103.66);out skel;'
+CONSULTA = ('[out:json][timeout:30];(node["amenity"="dentist"](19.20,-103.78,19.30,-103.66);'
+            'way["highway"~"^(primary|secondary|tertiary|residential|unclassified)$"]'
+            '(19.20,-103.78,19.30,-103.66););out skel geom;')
 
 
 def capturar(destino):
@@ -53,6 +56,17 @@ def capturar(destino):
     (destino / 'manifiesto.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
+def extraer_vias(elementos):
+    vias = []
+    for elemento in elementos:
+        if elemento.get('type') == 'way':
+            puntos = elemento.get('geometry', [])
+            if len(puntos) < 2:
+                raise ValueError('Vía sin geometría suficiente')
+            vias.append(LineString([(float(p['lon']), float(p['lat'])) for p in puntos]))
+    return vias
+
+
 def procesar(manifiesto, salida):
     manifiesto, salida = Path(manifiesto), Path(salida)
     meta = json.loads(manifiesto.read_text(encoding='utf-8'))
@@ -68,6 +82,8 @@ def procesar(manifiesto, salida):
     elementos = json.loads(raw)['elements']
     filas, vistos = [], set()
     for elemento in elementos:
+        if elemento['type'] == 'way':
+            continue
         ident = f"{elemento['type']}/{elemento['id']}"
         lat, lon = float(elemento['lat']), float(elemento['lon'])
         if elemento['type'] != 'node' or ident in vistos or not (19.20 <= lat <= 19.30 and -103.78 <= lon <= -103.66):
@@ -78,15 +94,25 @@ def procesar(manifiesto, salida):
                       'sha256': meta['sha256'], 'registro_origen': ident})
     if not filas:
         raise ValueError('Sin nodos para representar')
+    vias = extraer_vias(elementos)
     salida.mkdir(parents=True, exist_ok=False)
     frame = pd.DataFrame(filas)
     frame.to_csv(salida / 'oro_dentistas_osm.csv', index=False, encoding='utf-8-sig')
     geo = gpd.GeoDataFrame(frame, geometry=gpd.points_from_xy(frame.longitud, frame.latitud), crs='EPSG:4326')
+    geo = geo.to_crs('EPSG:32613')
     fig, ax = plt.subplots(figsize=(8, 7))
-    geo.to_crs('EPSG:32613').plot(ax=ax, color='#147d89', markersize=18)
+    ax.set_facecolor('#f4f2ec')
+    if vias:
+        calles = gpd.GeoSeries(vias, crs='EPSG:4326').to_crs('EPSG:32613')
+        calles.plot(ax=ax, color='#b4b7b6', linewidth=0.5, zorder=1)
+    geo.plot(ax=ax, color='#067e89', edgecolor='white', linewidth=0.8, markersize=55, zorder=2)
+    xmin, ymin, xmax, ymax = geo.total_bounds
+    ax.set_xlim(xmin - 600, xmax + 600)
+    ax.set_ylim(ymin - 600, ymax + 600)
     ax.set_title('Consultorios dentales mapeados en OpenStreetMap\nÁrea de Colima y Villa de Álvarez')
     ax.set_xlabel('Este (m, UTM 13N)'); ax.set_ylabel('Norte (m, UTM 13N)')
-    fig.text(.02, .02, '© OpenStreetMap contributors | ODbL: openstreetmap.org/copyright\nCobertura incompleta; no representa todos los consultorios.', fontsize=8)
+    nota = 'Calles seleccionadas y consultorios' if vias else 'Sin calles en este lote histórico'
+    fig.text(.02, .02, f'{nota} · © OpenStreetMap contributors | ODbL: openstreetmap.org/copyright\nCobertura incompleta; no representa todos los consultorios.', fontsize=8)
     fig.tight_layout(rect=(0, .06, 1, 1))
     fig.savefig(salida / 'mapa_dentistas_osm.png', dpi=150)
     plt.close(fig)

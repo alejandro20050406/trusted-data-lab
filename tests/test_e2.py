@@ -7,10 +7,18 @@ from pathlib import Path
 import pandas as pd
 
 from src.integracion_oro import construir_oro
-from src.geoespacial_e2 import procesar
+from src.geoespacial_e2 import procesar, extraer_vias
 
 
 class E2Test(unittest.TestCase):
+    def test_extrae_calles_como_lineas_sin_agregarlas_a_oro(self):
+        elementos = [{'type': 'node', 'id': 1, 'lat': 19.24, 'lon': -103.72},
+                     {'type': 'way', 'id': 7, 'geometry': [
+                         {'lat': 19.24, 'lon': -103.72}, {'lat': 19.25, 'lon': -103.71}]}]
+        vias = extraer_vias(elementos)
+        self.assertEqual(len(vias), 1)
+        self.assertEqual(list(vias[0].coords), [(-103.72, 19.24), (-103.71, 19.25)])
+
     def test_oro_conserva_localizador_de_bronce(self):
         filas = pd.DataFrame([dict(url='https://ejemplo.test/x', fecha_utc='2026-01-01T00:00:00Z',
             sha256='a'*64, archivo='datos/bronce/lote/p.html', registro_origen='tarjeta-3',
@@ -25,13 +33,17 @@ class E2Test(unittest.TestCase):
     def test_geoespacial_verifica_hash_y_genera_linaje(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            raw = json.dumps({'elements': [{'type': 'node', 'id': 1, 'lat': 19.24, 'lon': -103.72}]}).encode()
+            raw = json.dumps({'elements': [
+                {'type': 'node', 'id': 1, 'lat': 19.24, 'lon': -103.72},
+                {'type': 'way', 'id': 7, 'geometry': [
+                    {'lat': 19.24, 'lon': -103.72}, {'lat': 19.25, 'lon': -103.71}]}]}).encode()
             (root / 'osm.json').write_bytes(raw)
             meta = {'archivo': 'osm.json', 'sha256': hashlib.sha256(raw).hexdigest(),
                     'consultado_utc': '2026-11-20T00:00:00+00:00', 'url': 'https://overpass-api.de/api/interpreter'}
             (root / 'manifiesto.json').write_text(json.dumps(meta), encoding='utf8')
             procesar(root / 'manifiesto.json', root / 'salida')
             oro = pd.read_csv(root / 'salida' / 'oro_dentistas_osm.csv')
+            self.assertEqual(len(oro), 1)
             self.assertEqual(oro.iloc[0]['registro_origen'], 'node/1')
             self.assertEqual(oro.iloc[0]['sha256'], meta['sha256'])
             self.assertTrue((root / 'salida' / 'mapa_dentistas_osm.png').exists())

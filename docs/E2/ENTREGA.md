@@ -2,7 +2,7 @@
 
 ## Alcance
 
-Fuente especializada: OpenStreetMap, nodos `amenity=dentist` en el rectángulo 19.20–19.30° N y 103.78–103.66° O, consultados mediante Overpass. GeoPandas proyecta a UTM 13N y genera un mapa estático con atribución. Es una muestra de objetos mapeados, no un censo municipal. Véase [ética y legalidad](../etica-datos.md).
+Fuente especializada: OpenStreetMap, nodos `amenity=dentist` y geometrías de calles seleccionadas en el rectángulo 19.20–19.30° N y 103.78–103.66° O, consultados mediante Overpass. GeoPandas proyecta a UTM 13N y genera un mapa estático con calles y atribución. Es una muestra de objetos mapeados, no un censo municipal. Véase [ética y legalidad](../etica-datos.md).
 
 ## Reproducción
 
@@ -22,4 +22,4 @@ Los destinos deben ser nuevos. La captura requiere conectividad y disponibilidad
 
 ## Estado de verificación
 
-Las pruebas automatizadas ejercitan el linaje y el rechazo de alteraciones. El 20/11/2026 se capturaron cinco nodos reales con la instancia `overpass.openstreetmap.fr`, tras la falta de respuesta de la instancia anterior. El lote está en `datos/bronce/osm/verificacion-20261120/` y el CSV y mapa en `datos/e2/verificacion-20261120/`. Se verificó que el SHA-256 del archivo coincide con el manifiesto. La disponibilidad de la instancia puede variar y el mapa no representa un censo.
+Las pruebas automatizadas ejercitan el linaje y el rechazo de alteraciones. El 20/11/2026 se capturaron cinco nodos y 6.133 vías reales con la instancia `overpass.openstreetmap.fr`. El lote está en `datos/bronce/osm/captura-con-calles-20261120/` y el CSV y mapa en `datos/e2/mapa-con-calles-20261120/`. Se verificó que el SHA-256 del archivo coincide con el manifiesto. La disponibilidad de la instancia puede variar y el mapa no representa un censo. Los lotes históricos que solo contienen nodos se siguen procesando, pero no muestran calles.

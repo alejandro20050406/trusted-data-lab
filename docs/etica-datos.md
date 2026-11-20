@@ -14,7 +14,7 @@ Revisión: 20 de noviembre de 2026. Finalidad académica: estudiar insumos odont
 
 ## Privacidad, sesgos y límites
 
-La consulta OSM solicita únicamente identidad de nodo y coordenadas (`out skel`); no descarga etiquetas, nombres, direcciones, teléfonos, cuentas ni metadatos de colaboradores. No se recolectan pacientes, usuarios ni datos de redes sociales. La ubicación de un consultorio puede coincidir con un domicilio; el mapa debe utilizarse para análisis territorial, no para perfilar personas. Si se detecta información personal o sensible, retirarla y evaluar el incidente antes de publicar.
+La consulta OSM solicita identidades y coordenadas de nodos y geometrías de vías seleccionadas (`out skel geom`); no descarga etiquetas, nombres, direcciones, teléfonos, cuentas ni metadatos de colaboradores. No se recolectan pacientes, usuarios ni datos de redes sociales. La ubicación de un consultorio puede coincidir con un domicilio; el mapa debe utilizarse para análisis territorial, no para perfilar personas. Si se detecta información personal o sensible, retirarla y evaluar el incidente antes de publicar.
 
 OSM depende de aportaciones voluntarias y no es un censo: hay omisiones, errores, antigüedad variable y disparidad espacial. La consulta solo incluye nodos `amenity=dentist`, no polígonos ni otros tipos de establecimiento, y su rectángulo no es un límite municipal. No comparar densidades ni inferir acceso sin denominadores, fuentes complementarias y validación de cobertura. Los precios observados dependen de tiendas y fechas seleccionadas y no representan el mercado completo; las correspondencias ISSSTE requieren revisión humana y no transfieren precios.
 
