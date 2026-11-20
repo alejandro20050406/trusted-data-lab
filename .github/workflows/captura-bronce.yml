@@ -11,7 +11,7 @@ concurrency:
 jobs:
   captura:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,15 +22,11 @@ jobs:
       - name: Pruebas
         id: pruebas
         run: python -m unittest discover -s tests
-      - name: Capturar páginas públicas
+      - name: Capturar y recuperar fuentes incompletas
         id: captura
-        run: python scripts/captura_dental.py
-      - name: Capturar catálogo Imdent
-        id: catalogo
-        if: always() && steps.pruebas.outcome == 'success'
-        run: python -m scripts.captura_imdent
+        run: python -m scripts.recoleccion_resiliente
       - name: Validar y generar Plata y Oro
-        if: always() && steps.pruebas.outcome == 'success' && steps.catalogo.outcome != 'skipped'
+        if: steps.captura.outcome == 'success'
         run: python -m src.e1 --salida salida-e1
       - name: Guardar resultados E1
         if: always()
@@ -50,3 +46,12 @@ jobs:
             datos/bronce/imd_catalogo/
           retention-days: 90
           if-no-files-found: warn
+      - name: Guardar evidencia de todos los intentos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: intentos-captura-${{ github.run_id }}-${{ github.run_attempt }}
+          path: intentos-captura/
+          retention-days: 90
+          if-no-files-found: warn
+
