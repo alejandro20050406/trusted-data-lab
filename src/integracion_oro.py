@@ -30,7 +30,8 @@ ISSSTE_SCHEMA = pa.DataFrameSchema({
 
 COLUMNAS_ORO = ['tipo_registro', 'identificador', 'fuente', 'vendedor', 'tienda_imdent', 'producto', 'categoria',
                 'unidad', 'nivel_atencion', 'precio_observado_mxn', 'disponibilidad',
-                'fecha_utc', 'url', 'sha256', 'clave_issste_verificada', 'estado_vinculo_issste']
+                'fecha_utc', 'url', 'sha256', 'archivo_bronce', 'registro_origen',
+                'clave_issste_verificada', 'estado_vinculo_issste']
 
 
 def procesar_issste(manifiesto):
@@ -103,7 +104,8 @@ def construir_oro(plata, issste, correspondencias):
                       'tienda_imdent': x.get('tienda_imdent', ''), 'producto': x['producto'], 'categoria': x['categoria'],
                       'unidad': '', 'nivel_atencion': '', 'precio_observado_mxn': x['precio'],
                       'disponibilidad': x.get('disponibilidad', ''), 'fecha_utc': x['fecha_utc'],
-                      'url': x['url'], 'sha256': x['sha256'],
+                      'url': x['url'], 'sha256': x['sha256'], 'archivo_bronce': x.get('archivo', ''),
+                      'registro_origen': x.get('registro_origen', '') or x['url'],
                       'clave_issste_verificada': clave, 'estado_vinculo_issste': estado})
     for x in issste:
         filas.append({'tipo_registro': 'catalogo_issste',
@@ -112,15 +114,20 @@ def construir_oro(plata, issste, correspondencias):
                       'categoria': categoria_producto(x['descripcion']), 'unidad': x['unidad'],
                       'nivel_atencion': x['nivel_atencion'], 'precio_observado_mxn': None,
                       'disponibilidad': '', 'fecha_utc': x['fecha_utc'], 'url': x.get('url_fuente', ''),
-                      'sha256': x['sha256'], 'clave_issste_verificada': x['clave'], 'estado_vinculo_issste': 'registro_issste'})
+                      'sha256': x['sha256'], 'archivo_bronce': x.get('archivo', ''),
+                      'registro_origen': str(x.get('linea', '')), 'clave_issste_verificada': x['clave'], 'estado_vinculo_issste': 'registro_issste'})
     oro = pd.DataFrame(filas, columns=COLUMNAS_ORO)
     if oro.empty:
-        metricas = pd.DataFrame(columns=['tipo_registro', 'categoria', 'registros', 'con_precio_observado'])
+        metricas = pd.DataFrame(columns=['tipo_registro', 'categoria', 'registros', 'con_precio_observado', 'linaje'])
     else:
         metricas = (oro.groupby(['tipo_registro', 'categoria'], dropna=False)
                     .agg(registros=('identificador', 'size'),
                          con_precio_observado=('precio_observado_mxn', 'count'))
                     .reset_index())
+        linajes = oro.groupby(['tipo_registro', 'categoria'], dropna=False).apply(
+            lambda grupo: json.dumps(grupo[['identificador', 'archivo_bronce', 'registro_origen', 'fecha_utc', 'sha256']].to_dict('records'), ensure_ascii=False),
+            include_groups=False).reset_index(name='linaje')
+        metricas = metricas.merge(linajes, on=['tipo_registro', 'categoria'])
     reduccion = {'observaciones_comerciales_entrada': len(plata), 'ofertas_comerciales_oro': len(ultimas),
                  'filas_issste': len(issste), 'filas_oro': len(oro),
                  'regla': 'Última observación válida por URL; ISSSTE conserva clave y nivel.',
