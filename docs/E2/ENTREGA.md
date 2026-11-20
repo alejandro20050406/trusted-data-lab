@@ -22,4 +22,4 @@ Los destinos deben ser nuevos. La captura requiere conectividad y disponibilidad
 
 ## Estado de verificación
 
-Las pruebas automatizadas ejercitan el linaje y el rechazo de alteraciones. La captura en vivo del 20/11/2026 no pudo completarse: la instancia elegida agotó el tiempo de espera. Por ello queda pendiente generar y conservar el lote Bronce real y el mapa correspondiente antes de considerar E2 plenamente validada.
+Las pruebas automatizadas ejercitan el linaje y el rechazo de alteraciones. El 20/11/2026 se capturaron cinco nodos reales con la instancia `overpass.openstreetmap.fr`, tras la falta de respuesta de la instancia anterior. El lote está en `datos/bronce/osm/verificacion-20261120/` y el CSV y mapa en `datos/e2/verificacion-20261120/`. Se verificó que el SHA-256 del archivo coincide con el manifiesto. La disponibilidad de la instancia puede variar y el mapa no representa un censo.

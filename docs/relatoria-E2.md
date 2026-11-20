@@ -4,4 +4,4 @@ Se seleccionó OpenStreetMap por su cobertura abierta y su relación con el cont
 
 Se amplió el linaje de inventario Oro con ruta Bronce e identificador interno, y se incorporó la lista de contribuyentes a cada métrica agregada. Se documentaron licencias, restricciones, sesgos, privacidad y límites de retención. Las pruebas automatizadas comprueban la generación y la detección de cambios en Bronce.
 
-Durante la ejecución del 20 de noviembre de 2026 la instancia seleccionada de Overpass no respondió dentro del plazo y otra devolvió saturación. La comprobación con datos reales y el archivo cartográfico quedan pendientes; no se sustituyeron por datos inventados. Para terminar, repetir el comando de `docs/E2/ENTREGA.md`, conservar el lote y validar el mapa y su linaje.
+Durante la ejecución del 20 de noviembre de 2026 la primera instancia de Overpass no respondió dentro del plazo. Una instancia alternativa, `overpass.openstreetmap.fr`, permitió capturar cinco nodos reales y generar el mapa; se verificó el SHA-256 del lote y se conservaron Bronce y Oro en el repositorio. La cobertura es limitada y la disponibilidad de la instancia no está garantizada.

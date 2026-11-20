@@ -15,9 +15,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 
-URL = 'https://overpass.kumi.systems/api/interpreter'
-ROBOTS = 'https://overpass.kumi.systems/robots.txt'
-AGENTE = 'TrustedDataLabAcademic/1.0 (academic research)'
+URL = 'https://overpass.openstreetmap.fr/api/interpreter'
+ROBOTS = 'https://overpass.openstreetmap.fr/robots.txt'
+AGENTE = 'TrustedDataLabAcademic/1.0'
 CONSULTA = '[out:json][timeout:25];node["amenity"="dentist"](19.20,-103.78,19.30,-103.66);out skel;'
 
 
