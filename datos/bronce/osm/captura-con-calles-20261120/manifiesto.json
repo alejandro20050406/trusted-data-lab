@@ -1,0 +1,11 @@
+{
+  "fuente": "OpenStreetMap/Overpass",
+  "url": "https://overpass.openstreetmap.fr/api/interpreter",
+  "consulta": "[out:json][timeout:30];(node[\"amenity\"=\"dentist\"](19.20,-103.78,19.30,-103.66);way[\"highway\"~\"^(primary|secondary|tertiary|residential|unclassified)$\"](19.20,-103.78,19.30,-103.66););out skel geom;",
+  "consultado_utc": "2026-11-20T22:02:57.251089+00:00",
+  "archivo": "osm.json",
+  "sha256": "f6eaeb5a8ce8d679369bb12bfee3a538699045d8de182a7ead4f671ab370d426",
+  "robots_url": "https://overpass.openstreetmap.fr/robots.txt",
+  "robots_http": 404,
+  "robots_sha256": null
+}
