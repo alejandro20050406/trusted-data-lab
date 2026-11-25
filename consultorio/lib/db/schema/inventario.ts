@@ -132,3 +132,48 @@ export const movimiento = pgTable(
     ),
   ],
 );
+
+// ---------------------------------------------------------------------------
+// A-13: precios de referencia del observatorio (pipeline E1, capa Oro).
+// ---------------------------------------------------------------------------
+
+/** Un precio observado en una tienda, con su fuente y fecha de captura. */
+export const precioReferencia = pgTable(
+  "precio_referencia",
+  {
+    id: serial("id").primaryKey(),
+    producto: text("producto").notNull(),
+    /** Vendedor o tienda de la oferta; si no hay, la fuente del observatorio. */
+    tienda: text("tienda").notNull(),
+    fuente: text("fuente").notNull(),
+    precio: numeric("precio", { precision: 12, scale: 2, mode: "number" }).notNull(),
+    presentacion: text("presentacion"),
+    categoria: text("categoria"),
+    disponibilidad: text("disponibilidad"),
+    url: text("url").notNull(),
+    fechaCaptura: timestamp("fecha_captura", { withTimezone: true }).notNull(),
+    /** sha256 del archivo Bronce de donde salió el precio. */
+    sha256: text("sha256").notNull(),
+    importadoEn: timestamp("importado_en", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [
+    uniqueIndex("precio_referencia_unico_idx").on(t.url, t.fechaCaptura, t.sha256),
+    index("precio_referencia_url_idx").on(t.url),
+    check("precio_referencia_positivo", sql`${t.precio} > 0`),
+  ],
+);
+
+/** Correspondencia revisada a mano entre un insumo y un producto del observatorio (por URL). */
+export const correspondenciaObservatorio = pgTable(
+  "correspondencia_observatorio",
+  {
+    id: serial("id").primaryKey(),
+    insumoId: integer("insumo_id")
+      .notNull()
+      .references(() => insumo.id),
+    url: text("url").notNull(),
+    nota: text("nota"),
+    revisadoEn: timestamp("revisado_en", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (t) => [uniqueIndex("correspondencia_insumo_url_idx").on(t.insumoId, t.url)],
+);

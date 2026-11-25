@@ -15,6 +15,13 @@
       "when": 1795631669694,
       "tag": "0001_inventario",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795632419922,
+      "tag": "0002_precios_referencia",
+      "breakpoints": true
     }
   ]
 }

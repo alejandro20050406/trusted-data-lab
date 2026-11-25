@@ -11,3 +11,4 @@ fecha,actividad,minutos,descripcion
 2026-11-25,A-10 avisos de inventario y cron,70,"crearAviso() con clave sin duplicados; avisos de reserva baja, agotado, por caducar, caducado y vencido; cierre al reponer; ruta de cron con CRON_SECRET y vercel.json"
 2026-11-25,A-09 panel de inicio,60,"Panel con avisos ordenados por prioridad, reserva y caducidad; marcar como hecho; prueba de rendimiento con red 3G lenta y CPU x4 sobre build de producción (menos de 2 s)"
 2026-11-25,A-11 brackets por diente,40,"Vista por arcada en orden clínico con existencia por diente (FDI), sistema y slot; registrar compra con el diente ya elegido; pruebas Vitest y Playwright"
+2026-11-25,A-13 precios de referencia del observatorio,75,"Tablas precio_referencia y correspondencia_observatorio; importador de oro_inventario.csv de E1 con tienda, URL, fecha de captura y sha256; búsqueda y vínculo manual de productos; pruebas con CSV ficticio"

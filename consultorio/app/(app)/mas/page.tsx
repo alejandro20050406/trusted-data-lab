@@ -14,6 +14,9 @@ export default async function Mas() {
         <Button asChild variant="outline" className="justify-start">
           <Link href="/inventario/brackets">Brackets por diente</Link>
         </Button>
+        <Button asChild variant="outline" className="justify-start">
+          <Link href="/mas/observatorio">Precios de referencia</Link>
+        </Button>
       </nav>
       <form action={cerrarSesion}>
         <BotonPrimario type="submit">
