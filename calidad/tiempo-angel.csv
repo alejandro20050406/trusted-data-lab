@@ -9,3 +9,4 @@ fecha,actividad,minutos,descripcion
 2026-11-25,A-05 A-07 A-08 inventario compra y consumo,150,"Lista con búsqueda; compra en 3 toques con lote, caducidad y variante; descuento de 1 toque con deshacer; reglas por insumo; pruebas Vitest y Playwright 360/1280"
 2026-11-25,A-12 historial de precios,30,"historialPrecios() con precio por unidad y por pieza para comparar presentaciones; compraMasBarata(); pruebas con cajas de 100 y 50"
 2026-11-25,A-10 avisos de inventario y cron,70,"crearAviso() con clave sin duplicados; avisos de reserva baja, agotado, por caducar, caducado y vencido; cierre al reponer; ruta de cron con CRON_SECRET y vercel.json"
+2026-11-25,A-09 panel de inicio,60,"Panel con avisos ordenados por prioridad, reserva y caducidad; marcar como hecho; prueba de rendimiento con red 3G lenta y CPU x4 sobre build de producción (menos de 2 s)"

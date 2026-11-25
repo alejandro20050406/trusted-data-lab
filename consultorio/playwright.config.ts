@@ -11,6 +11,7 @@ export const E2E_DENTISTA = { email: "dentista@consultorio.test", password: "cla
 
 export default defineConfig({
   testDir: "./e2e",
+  testIgnore: ["rendimiento/**"],
   fullyParallel: false,
   workers: 1,
   retries: process.env.CI ? 1 : 0,

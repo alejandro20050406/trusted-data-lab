@@ -17,6 +17,7 @@ test("contraseña incorrecta muestra un error", async ({ page }) => {
 test("la dentista inicia sesión y la cierra", async ({ page }) => {
   await entrar(page);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await page.getByRole("button", { name: "Cerrar sesión" }).click();
+  await page.goto("/mas");
+  await page.getByRole("main").getByRole("button", { name: "Cerrar sesión" }).click();
   await expect(page).toHaveURL(/\/login$/);
 });
