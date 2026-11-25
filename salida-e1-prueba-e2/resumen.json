@@ -1,0 +1,77 @@
+{
+  "entradas": 4356,
+  "validos": 4178,
+  "cuarentena": 178,
+  "urls_unicas_validas": 2088,
+  "capturas_imdent": [
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T041858593172Z\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": null,
+      "tarjetas_detectadas": 1275
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T042507754544Z-ddc-deposito-dental-del-caribe\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 846,
+      "tarjetas_detectadas": 846
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T042507754544Z-deposito-dental-dentac\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 9,
+      "tarjetas_detectadas": 9
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T042507754544Z-deposito-dental-goldentist\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 45,
+      "tarjetas_detectadas": 45
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T045205425082Z-ddc-deposito-dental-del-caribe\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 846,
+      "tarjetas_detectadas": 846
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T045205425082Z-deposito-dental-dentac\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 9,
+      "tarjetas_detectadas": 9
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T045205425082Z-deposito-dental-goldentist\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 45,
+      "tarjetas_detectadas": 45
+    },
+    {
+      "manifiesto": "datos\\bronce\\imd_catalogo\\20261113T045205425082Z-deposito-dental-q-narvarte\\manifiesto.json",
+      "estado": "completa",
+      "total_anunciado": 1275,
+      "tarjetas_detectadas": 1275
+    }
+  ],
+  "issste_validos": 1579,
+  "issste_cuarentena": 4,
+  "oro_filas": 3667,
+  "imputaciones_exploratorias": 14,
+  "validacion_imputacion_n": 128,
+  "validacion_imputacion_mae": 442.3114453125,
+  "validacion_imputacion_mape": 137.58167742038916,
+  "validacion_historial_n": 2088,
+  "validacion_historial_mape": 0.0,
+  "atipicos_grupo": 108,
+  "faltantes_candidatos": {
+    "fuente": 0,
+    "url": 0,
+    "fecha_utc": 0,
+    "archivo": 0,
+    "sha256": 0,
+    "producto": 0,
+    "moneda": 0,
+    "precio": 178
+  },
+  "nota": "Estadística exploratoria; productos y condiciones no verificados como equivalentes."
+}

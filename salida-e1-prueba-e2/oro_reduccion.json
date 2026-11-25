@@ -1,0 +1,8 @@
+{
+  "observaciones_comerciales_entrada": 4178,
+  "ofertas_comerciales_oro": 2088,
+  "filas_issste": 1579,
+  "filas_oro": 3667,
+  "regla": "Última observación válida por URL; ISSSTE conserva clave y nivel.",
+  "precios_issste": "no publicados; sin imputar ni transferir"
+}

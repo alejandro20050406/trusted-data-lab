@@ -1,0 +1,58 @@
+[
+  {
+    "linea": 1383,
+    "archivo": "datos/bronce/issste_insumos/20261113T015745409442Z/catalogoinsumos.csv",
+    "sha256": "30ae02d841e767f70fef0bc1bb398fae45381e32bb1f6e2d6cbc53ef131d823d",
+    "registro": {
+      "CLAVE": "5.00256E+11",
+      "DESCRIPCION": "VACUNA ABDALA CONTRA COVID-19 TIENE COMO PRINCIPIO ACTIVO LA PROTEÍNA RECOMBINANTE DEL DOMINIO DE UNIÓN AL RECEPTOR DEL VIRUS SARS-COV-2 RBD QUE PERMITE LA INTERACCIÓN DE ACE-2 SU RECEPTOR EN CÉLULAS HUMANAS MOLÉCULA QUE SE HA EXPRESADO EN LA LEVADURA PICHIA PASTORIS ADYUVADA EN HIDRÓXIDO DE ALUMINIO CAJA DE CARTÓN CON 10 FRASCOS ÁMPULA CADA FRASCO ÁMPULA PARA 10 DOSIS DE 05 ML CADA UNA 50 MCG DE LA VACUNA “ABDALA”",
+      "UNIDAD DE PRESENTACION": "ENVASE",
+      "NIVEL DE ATENCION": "1er Nivel",
+      "GRUPO TERAPEUTICO": "Clave administrativa interna",
+      "INDICACIONES": "0"
+    },
+    "motivo": "{\n    \"DATA\": {\n        \"DATAFRAME_CHECK\": [\n            {\n                \"schema\": null,\n                \"column\": \"clave\",\n                \"check\": \"str_matches('^\\\\d+$')\",\n                \"error\": \"Column 'clave' failed element-wise validator number 0: str_matches('^\\\\d+$') failure cases: 5.00256E+11\"\n            }\n        ]\n    }\n}"
+  },
+  {
+    "linea": 1427,
+    "archivo": "datos/bronce/issste_insumos/20261113T015745409442Z/catalogoinsumos.csv",
+    "sha256": "30ae02d841e767f70fef0bc1bb398fae45381e32bb1f6e2d6cbc53ef131d823d",
+    "registro": {
+      "CLAVE": "5.00516E+11",
+      "DESCRIPCION": "ETAMSILATO CAJA CON 4 AMPOLLETAS DE 250 MG EN 2 ML",
+      "UNIDAD DE PRESENTACION": "CAJA",
+      "NIVEL DE ATENCION": "2do y 3er Nivel",
+      "GRUPO TERAPEUTICO": "Clave administrativa interna",
+      "INDICACIONES": "Prevención y el tratamiento de las hemorragias producidas por procedimientos quirúrgicos"
+    },
+    "motivo": "{\n    \"DATA\": {\n        \"DATAFRAME_CHECK\": [\n            {\n                \"schema\": null,\n                \"column\": \"clave\",\n                \"check\": \"str_matches('^\\\\d+$')\",\n                \"error\": \"Column 'clave' failed element-wise validator number 0: str_matches('^\\\\d+$') failure cases: 5.00516E+11\"\n            }\n        ]\n    }\n}"
+  },
+  {
+    "linea": 1443,
+    "archivo": "datos/bronce/issste_insumos/20261113T015745409442Z/catalogoinsumos.csv",
+    "sha256": "30ae02d841e767f70fef0bc1bb398fae45381e32bb1f6e2d6cbc53ef131d823d",
+    "registro": {
+      "CLAVE": "5.00682E+11",
+      "DESCRIPCION": "LIDOCAÍNA SOLUCIÓN INYECTABLE AL 2 CADA CARTUCHO DENTAL CONTIENE CLORHIDRATO DE LIDOCAÍNA 36 MG ENVASE CON 50 CARTUCHOS DENTALES CON18 ML ",
+      "UNIDAD DE PRESENTACION": "ENVASE",
+      "NIVEL DE ATENCION": "2do y 3er Nivel",
+      "GRUPO TERAPEUTICO": "Clave administrativa interna",
+      "INDICACIONES": "0"
+    },
+    "motivo": "{\n    \"DATA\": {\n        \"DATAFRAME_CHECK\": [\n            {\n                \"schema\": null,\n                \"column\": \"clave\",\n                \"check\": \"str_matches('^\\\\d+$')\",\n                \"error\": \"Column 'clave' failed element-wise validator number 0: str_matches('^\\\\d+$') failure cases: 5.00682E+11\"\n            }\n        ]\n    }\n}"
+  },
+  {
+    "linea": 1444,
+    "archivo": "datos/bronce/issste_insumos/20261113T015745409442Z/catalogoinsumos.csv",
+    "sha256": "30ae02d841e767f70fef0bc1bb398fae45381e32bb1f6e2d6cbc53ef131d823d",
+    "registro": {
+      "CLAVE": "5.00684E+11",
+      "DESCRIPCION": "ECULIZUMAB SOLUCIÓN 10 MG/ML CADA FRASCO CONTIENE 300 MG DE ECULIZUMAB 10 MG/ML PIEZA",
+      "UNIDAD DE PRESENTACION": "PIEZA",
+      "NIVEL DE ATENCION": "2do y 3er Nivel",
+      "GRUPO TERAPEUTICO": "10 Hematología",
+      "INDICACIONES": "Para adultos y niños con hemoglobinuria paroxística nocturna HPN con componente hemolítico y/o trombótico activo Síndrome hemolítico urémico atípico demostrado SHUa"
+    },
+    "motivo": "{\n    \"DATA\": {\n        \"DATAFRAME_CHECK\": [\n            {\n                \"schema\": null,\n                \"column\": \"clave\",\n                \"check\": \"str_matches('^\\\\d+$')\",\n                \"error\": \"Column 'clave' failed element-wise validator number 0: str_matches('^\\\\d+$') failure cases: 5.00684E+11\"\n            }\n        ]\n    }\n}"
+  }
+]
