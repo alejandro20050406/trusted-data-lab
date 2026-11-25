@@ -1,4 +1,5 @@
-import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { boolean, date, index, integer, pgEnum, pgTable, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 // Tablas de Better Auth (usuario, sesión, cuenta y verificación).
 // Los nombres de columnas siguen el esquema núcleo de Better Auth.
@@ -73,4 +74,46 @@ export const verification = pgTable(
       .notNull(),
   },
   (t) => [index("verification_identifier_idx").on(t.identifier)],
+);
+
+// ---------------------------------------------------------------------------
+// Contrato con Adrián: catálogo de dientes y avisos del panel de inicio.
+// ---------------------------------------------------------------------------
+
+export const arcadaEnum = pgEnum("arcada", ["superior", "inferior"]);
+export const ladoEnum = pgEnum("lado", ["derecho", "izquierdo"]);
+
+/** 32 dientes permanentes en notación FDI (11–48). */
+export const diente = pgTable("diente", {
+  fdi: integer("fdi").primaryKey(),
+  nombre: text("nombre").notNull(),
+  cuadrante: integer("cuadrante").notNull(),
+  arcada: arcadaEnum("arcada").notNull(),
+  lado: ladoEnum("lado").notNull(),
+});
+
+export const prioridadEnum = pgEnum("prioridad", ["alta", "media", "baja"]);
+
+export const aviso = pgTable(
+  "aviso",
+  {
+    id: serial("id").primaryKey(),
+    tipo: text("tipo").notNull(),
+    titulo: text("titulo").notNull(),
+    detalle: text("detalle"),
+    prioridad: prioridadEnum("prioridad").notNull(),
+    fechaVencimiento: date("fecha_vencimiento", { mode: "string" }),
+    urlAccion: text("url_accion"),
+    origen: text("origen").notNull(),
+    atendido: boolean("atendido").default(false).notNull(),
+    /** Llave para no duplicar avisos abiertos (p. ej. "inventario:reserva:3"). */
+    clave: text("clave"),
+    creadoEn: timestamp("creado_en", { withTimezone: true }).defaultNow().notNull(),
+    actualizadoEn: timestamp("actualizado_en", { withTimezone: true }).defaultNow().notNull(),
+    atendidoEn: timestamp("atendido_en", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("aviso_clave_abierta_idx").on(t.clave).where(sql`${t.atendido} = false`),
+    index("aviso_pendiente_idx").on(t.atendido, t.prioridad),
+  ],
 );
