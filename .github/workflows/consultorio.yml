@@ -1,0 +1,29 @@
+name: Consultorio lint, tipos y pruebas
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'consultorio/**'
+      - '.github/workflows/consultorio.yml'
+  push:
+    paths:
+      - 'consultorio/**'
+      - '.github/workflows/consultorio.yml'
+jobs:
+  verificar:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: consultorio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: consultorio/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+      - run: npx vitest run
