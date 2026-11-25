@@ -10,3 +10,4 @@ fecha,actividad,minutos,descripcion
 2026-11-25,A-12 historial de precios,30,"historialPrecios() con precio por unidad y por pieza para comparar presentaciones; compraMasBarata(); pruebas con cajas de 100 y 50"
 2026-11-25,A-10 avisos de inventario y cron,70,"crearAviso() con clave sin duplicados; avisos de reserva baja, agotado, por caducar, caducado y vencido; cierre al reponer; ruta de cron con CRON_SECRET y vercel.json"
 2026-11-25,A-09 panel de inicio,60,"Panel con avisos ordenados por prioridad, reserva y caducidad; marcar como hecho; prueba de rendimiento con red 3G lenta y CPU x4 sobre build de producción (menos de 2 s)"
+2026-11-25,A-11 brackets por diente,40,"Vista por arcada en orden clínico con existencia por diente (FDI), sistema y slot; registrar compra con el diente ya elegido; pruebas Vitest y Playwright"
