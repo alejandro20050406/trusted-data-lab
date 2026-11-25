@@ -2,3 +2,4 @@ fecha,actividad,minutos,descripcion
 11 de noviembre,planeación,60,se elaboró la planificación del proyecto
 12 de noviembre,investigación,120,investigación de fuentes para extraer datos
 2026-11-25,A-01 proyecto base,75,"Next.js 16 en consultorio/, Drizzle con Neon (Pool), Better Auth con correo y contraseña, requireSession(), firmas del contrato, CI y pruebas de inicio de sesión con PGlite"
+2026-11-25,A-02 sistema de diseño,40,"Paleta azul en lib/diseno/colores.ts, cálculo de contraste WCAG con pruebas, variables de shadcn y página /estilo con tabla de contrastes"
