@@ -5,3 +5,4 @@ fecha,actividad,minutos,descripcion
 2026-11-25,A-02 sistema de diseño,40,"Paleta azul en lib/diseno/colores.ts, cálculo de contraste WCAG con pruebas, variables de shadcn y página /estilo con tabla de contrastes"
 2026-11-25,A-03 diseño base y navegación,35,"Layout mobile-first con barra inferior de 4 secciones en celular y lateral en escritorio, componentes del contrato y pruebas de Playwright a 360 y 1280 px"
 2026-11-25,A-04 esquema de inventario,45,"Tablas categoria, insumo, lote, movimiento, variante, diente y aviso; seed de 32 dientes FDI, 9 categorías e insumos iniciales; existencia calculada desde movimientos con pruebas en PGlite"
+2026-11-25,A-06 reglas de existencia y caducidad,40,"estadoInsumo() con reserva, caducidad próxima, caducados y vida útil por fecha de compra; consumo FEFO; pruebas con fechas fijas"
