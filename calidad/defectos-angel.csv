@@ -1,2 +1,4 @@
 fecha,archivo,defecto,correccion,estado
 12 de noviembre 2026,autenticación de las fuentes,algunas fuentes solicitaban autenticación para extraer productos ,se seleccionaron otras fuentes, corregido 
+
+2026-11-25,consultorio/lib/auth.ts,"next build fallaba sin DATABASE_URL porque Better Auth se creaba al importar el módulo","Better Auth se crea al primer uso (getAuth) y la sesión lee headers() antes de tocar la base",Corregido

@@ -1,0 +1,7 @@
+﻿tipo_registro,identificador,fuente,vendedor,tienda_imdent,producto,categoria,unidad,nivel_atencion,precio_observado_mxn,disponibilidad,fecha_utc,url,sha256,clave_issste_verificada,estado_vinculo_issste
+oferta_comercial,https://tienda-a.test/ligas-azules,fuente_prueba,Tienda A,,"Ligas de prueba, azules 1/4",ligas,,,85.5,disponible,2026-11-13T02:24:54.027797+00:00,https://tienda-a.test/ligas-azules,697815ef245732b5c46657155e2c2ba4664d1e0fbe07b64015fb861ea8b57fa2,,sin_correspondencia
+oferta_comercial,https://tienda-b.test/guantes,imdent_prueba,,deposito-prueba,"Guantes ""de prueba"" caja",guantes,Caja 100,,120,no_verificada,2026-11-13T04:52:07.789960+00:00,https://tienda-b.test/guantes,59c7d4b9c1dbd747bf7f2a6f82124923e4ab673ef1a0870a67cbfd0ca8834571,,sin_correspondencia
+catalogo_issste,X1,issste,,,Catálogo sin precio,,,,,,2026-11-13T04:52:07+00:00,https://issste.test/x,59c7d4b9c1dbd747bf7f2a6f82124923e4ab673ef1a0870a67cbfd0ca8834571,,
+oferta_comercial,https://tienda-c.test/sin-precio,fuente_prueba,Tienda C,,Producto sin precio,ligas,,,,disponible,2026-11-13T02:24:54+00:00,https://tienda-c.test/sin-precio,697815ef245732b5c46657155e2c2ba4664d1e0fbe07b64015fb861ea8b57fa2,,
+oferta_comercial,https://tienda-c.test/sin-sha,fuente_prueba,Tienda C,,Producto sin sha,ligas,,,10,disponible,2026-11-13T02:24:54+00:00,https://tienda-c.test/sin-sha,,,
+oferta_comercial,https://tienda-c.test/sin-fecha,fuente_prueba,Tienda C,,Producto sin fecha,ligas,,,10,disponible,,https://tienda-c.test/sin-fecha,697815ef245732b5c46657155e2c2ba4664d1e0fbe07b64015fb861ea8b57fa2,,
