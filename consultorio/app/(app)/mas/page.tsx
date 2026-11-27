@@ -12,6 +12,15 @@ export default async function Mas() {
       <h1 className="mb-4 text-2xl font-semibold">Más</h1>
       <nav aria-label="Más opciones" className="mb-6 flex flex-col gap-2">
         <Button asChild variant="outline" className="justify-start">
+          <Link href="/tareas">Recordatorios: esterilización y residuos</Link>
+        </Button>
+        <Button asChild variant="outline" className="justify-start">
+          <Link href="/reportes">Reportes</Link>
+        </Button>
+        <Button asChild variant="outline" className="justify-start">
+          <Link href="/mas/app">Instalar la app y notificaciones</Link>
+        </Button>
+        <Button asChild variant="outline" className="justify-start">
           <Link href="/inventario/brackets">Brackets por diente</Link>
         </Button>
         <Button asChild variant="outline" className="justify-start">

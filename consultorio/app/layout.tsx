@@ -7,9 +7,11 @@ const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Consultorio · Inventario",
   description: "Inventario de insumos del consultorio dental",
+  applicationName: "Consultorio",
+  appleWebApp: { capable: true, title: "Consultorio", statusBarStyle: "default" },
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#1D4ED8", viewportFit: "cover" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

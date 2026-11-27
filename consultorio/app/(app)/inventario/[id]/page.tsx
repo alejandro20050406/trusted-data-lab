@@ -11,6 +11,7 @@ import { Estado, type TipoEstado } from "@/components/ui/estado";
 import { Tarjeta, TarjetaContenido, TarjetaTitulo } from "@/components/ui/tarjeta";
 import { BotonDarDeBaja } from "./boton-dar-de-baja";
 import { FormularioReglas } from "./formulario-reglas";
+import { VariacionPrecio } from "@/app/(app)/reportes/precios/variacion-precio";
 
 const NIVEL: Record<"suficiente" | "reserva" | "agotado", { tipo: TipoEstado; texto: string }> = {
   agotado: { tipo: "alerta", texto: "Agotado" },
@@ -89,6 +90,8 @@ export default async function DetalleInsumo(props: PageProps<"/inventario/[id]">
           />
         </TarjetaContenido>
       </Tarjeta>
+
+      <VariacionPrecio insumoId={insumo.id} unidad={insumo.unidad} />
 
       <Tarjeta>
         <TarjetaTitulo>Lotes y compras</TarjetaTitulo>
