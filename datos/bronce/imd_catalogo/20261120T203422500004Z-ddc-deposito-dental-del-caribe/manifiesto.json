@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "estado": "completa",
+  "total_anunciado": 846,
+  "paginas": [
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list",
+      "consultado_utc": "2026-11-20T20:35:51.068117+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0001.html",
+      "sha256": "3877c765dbb75e1a649d82c91ba24efd5dafb77984f5cf3bc38741aa02321ecb",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=2",
+      "consultado_utc": "2026-11-20T20:35:54.518338+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0002.html",
+      "sha256": "1a62a45b8569bd051dfe530392579aa3fd4fba9c3804ec3b79f85049d07db13b",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=3",
+      "consultado_utc": "2026-11-20T20:35:58.224914+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0003.html",
+      "sha256": "132bb68276d02c7c56fe5b82893f51795fcd9aa7443aba605729873cec581b6d",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=4",
+      "consultado_utc": "2026-11-20T20:36:01.799664+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0004.html",
+      "sha256": "efb061d84ebb51968e3f7663b92ea034098c495f527c8ff7b8fde5da1b36f3c6",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=5",
+      "consultado_utc": "2026-11-20T20:36:05.326127+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0005.html",
+      "sha256": "c8edebc8f94d20a53a5d892cc4c328ab07f93f1621779fe31e3dd18e7867e43e",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=6",
+      "consultado_utc": "2026-11-20T20:36:08.832027+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0006.html",
+      "sha256": "06f008e223eef3cee927df7d8e34cebb69b38b93e41d03f0044f00d52fb96605",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=7",
+      "consultado_utc": "2026-11-20T20:36:12.189941+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0007.html",
+      "sha256": "3b1a8fe05d357aa75bf03610d708d2203bcf3f09f2297f00277e206d7590180a",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=8",
+      "consultado_utc": "2026-11-20T20:36:15.653289+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0008.html",
+      "sha256": "da79db1042090c1b397e4bb7b33e609a70f10944c70fc9263e36f88beae20af8",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=9",
+      "consultado_utc": "2026-11-20T20:36:19.361818+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0009.html",
+      "sha256": "d5afd107916bacebb4bd1f83e5a439c59a553c10c58ffc88feebedd7402e819f",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=10",
+      "consultado_utc": "2026-11-20T20:36:23.003769+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0010.html",
+      "sha256": "ff7e44b0c97b77dff20f8ec56132c76023e662027e0862c54da8b4d997032e73",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=11",
+      "consultado_utc": "2026-11-20T20:36:26.747910+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0011.html",
+      "sha256": "0c39c06bb830ac70cd7c21ce49311b6a0b37567294efca91b02228c08dc261ab",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=12",
+      "consultado_utc": "2026-11-20T20:36:30.261377+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0012.html",
+      "sha256": "f55da78bae8c1f23b01b5ca8949e84fdf46f9df5d50aa5d244a99d6152dd1be2",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=13",
+      "consultado_utc": "2026-11-20T20:36:33.936703+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0013.html",
+      "sha256": "1d78c01e4d053a1b123398fe27065cf65549a214a4cd5e0024929e3cee2c234a",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=14",
+      "consultado_utc": "2026-11-20T20:36:37.409089+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0014.html",
+      "sha256": "d9bc67c51ca1148d0b193ba2361874f5e5489fed89db348aec885a6d216030bf",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/ddc-deposito-dental-del-caribe?view=list&page=15",
+      "consultado_utc": "2026-11-20T20:36:40.978290+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0015.html",
+      "sha256": "e031a5d53f8ae896a0cedf1790bc161ca3ea082506f6453c4af0ac7a036026b0",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 6
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "estado": "completa",
+  "total_anunciado": 9,
+  "paginas": [
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-dentac?view=list",
+      "consultado_utc": "2026-11-13T04:54:20.806897+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0001.html",
+      "sha256": "af2999d922edd6e7bcc798f7c602769e78f1eadcbf91614218c06d13bca16f30",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "604c5297ce74dd495faf825c4d607c5a6af3876dbdb55a91497205d7b8813ab4",
+      "productos_detectados": 9
+    }
+  ]
+}

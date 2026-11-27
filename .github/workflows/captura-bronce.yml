@@ -4,7 +4,8 @@ on:
   schedule:
     - cron: '23 12 * * *'
 permissions:
-  contents: read
+  # Escritura necesaria para versionar cada captura Bronce y acumular la historia.
+  contents: write
 concurrency:
   group: captura-bronce-odontologia
   cancel-in-progress: false
@@ -25,8 +26,27 @@ jobs:
       - name: Capturar y recuperar fuentes incompletas
         id: captura
         run: python -m scripts.recoleccion_resiliente
+      - name: Versionar Bronce en el repositorio
+        # Se ejecuta aunque alguna fuente quede incompleta: solo las capturas completas llegan a Bronce.
+        if: always() && steps.captura.outcome != 'skipped'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos/bronce/odontologia datos/bronce/imd_catalogo
+          if git diff --cached --quiet; then
+            echo "Sin capturas nuevas que versionar"
+            exit 0
+          fi
+          # [skip ci] evita que e1.yml vuelva a descargar Imdent por este commit.
+          git commit -m "datos: captura Bronce ${{ github.run_id }} [skip ci]"
+          for intento in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((intento * 10))
+          done
+          echo "No se pudo publicar la captura; queda en el artefacto de la ejecución" >&2
+          exit 1
       - name: Validar y generar Plata y Oro
-        if: steps.captura.outcome == 'success'
+        if: always() && steps.captura.outcome == 'success'
         run: python -m src.e1 --salida salida-e1
       - name: Guardar resultados E1
         if: always()

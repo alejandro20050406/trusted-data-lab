@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "estado": "completa",
+  "total_anunciado": 1275,
+  "paginas": [
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list",
+      "consultado_utc": "2026-11-22T19:52:17.583564+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0001.html",
+      "sha256": "09d9078752909929130cfa271587e67cc62d14c7fcc669e6502f0f5b999302ad",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=2",
+      "consultado_utc": "2026-11-22T19:52:21.779340+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0002.html",
+      "sha256": "fc041be4e047cffc6359eadfebd7f766d93eb69726ecd546164aa0c43e891b47",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=3",
+      "consultado_utc": "2026-11-22T19:52:27.554073+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0003.html",
+      "sha256": "ff8d10b1b552408bacf8102f0bb065669c06b163b7636d9a705bfeadff32af51",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=4",
+      "consultado_utc": "2026-11-22T19:52:31.679122+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0004.html",
+      "sha256": "105fd7ed1f578374c9041f68a9e26bf6fd33c5cc72be3bc71da152657819da92",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=5",
+      "consultado_utc": "2026-11-22T19:52:35.898177+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0005.html",
+      "sha256": "1b2d7acb153ac9f5a3dad3c70424dce3f08184526c845b6f4b872ac034bd1db9",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=6",
+      "consultado_utc": "2026-11-22T19:52:40.695053+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0006.html",
+      "sha256": "5c50edefd8ad7bda00dceb98fa52fdf3a392b1d238e48195890a574184b48f94",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=7",
+      "consultado_utc": "2026-11-22T19:52:47.859204+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0007.html",
+      "sha256": "0cb8954a91a8b57d461b03859b351244b3bca5ab6708b6d64b3810e1a41c32ba",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=8",
+      "consultado_utc": "2026-11-22T19:52:52.542223+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0008.html",
+      "sha256": "0bf91ea385f72e1f06c94326d0861ee0076b29e2c2f1e76bc339c13157f74e7b",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=9",
+      "consultado_utc": "2026-11-22T19:52:58.401172+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0009.html",
+      "sha256": "7e4c9c6d6c1c74d96e8f4286e1127ea1737d2d5ead91f92717553e8f273c44db",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=10",
+      "consultado_utc": "2026-11-22T19:53:03.344453+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0010.html",
+      "sha256": "ba42e446f42323e655c9aeba64a3a85ef3f5d7d2818b4f1a9ac25628b8427feb",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=11",
+      "consultado_utc": "2026-11-22T19:53:08.227117+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0011.html",
+      "sha256": "42bdd36f994c77361622268a48dcb1ea1e034088596be88f9d65b2d5b15e250d",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=12",
+      "consultado_utc": "2026-11-22T19:53:12.367215+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0012.html",
+      "sha256": "7f4efd39afbdd4b9374380712c6f5afc7c081879e544ceed9724ac2890d099af",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=13",
+      "consultado_utc": "2026-11-22T19:53:17.129430+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0013.html",
+      "sha256": "c033a42d33a047369eed80f6cbd59f4b138309fe055acfec99a688ef7b6394c9",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=14",
+      "consultado_utc": "2026-11-22T19:53:22.134958+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0014.html",
+      "sha256": "e62c1c8bfc19dc99f20181abd0ce472df73d7c161ed33338104db2e728815974",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=15",
+      "consultado_utc": "2026-11-22T19:53:26.851348+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0015.html",
+      "sha256": "6e41ad7ba7767d6b04c515c0639ba766721e4d13046e66c8e782b8f23cc7984f",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=16",
+      "consultado_utc": "2026-11-22T19:53:34.737327+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0016.html",
+      "sha256": "21db30881c6e0fb685ab7f211934b54cc032bcad91aa921f40a4f4a1177c8160",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=17",
+      "consultado_utc": "2026-11-22T19:53:39.425651+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0017.html",
+      "sha256": "2ee12d3dc2a00b09432f936f9f17469b787fd5848a5ca0b004e7db82cfb9907a",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=18",
+      "consultado_utc": "2026-11-22T19:53:46.264693+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0018.html",
+      "sha256": "ce95a7ee268d64a5679cf350b0c3cf1545437d4d9cd51f308bff28c768b999ad",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=19",
+      "consultado_utc": "2026-11-22T19:53:50.710426+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0019.html",
+      "sha256": "70b3f02ce337b7ff309ebcaf13cfe37221c3cd7d7101d167ec3344aeda2127d6",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=20",
+      "consultado_utc": "2026-11-22T19:53:55.298935+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0020.html",
+      "sha256": "e3583ffffc9a6590676d166fe262bc27b2d86a038f431076e036dad220092708",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=21",
+      "consultado_utc": "2026-11-22T19:54:00.615729+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0021.html",
+      "sha256": "54a3ccd003bdd8ae0253c65002eacfda3183670fedf3a38c6433a05366169d70",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 60
+    },
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-q-narvarte?view=list&page=22",
+      "consultado_utc": "2026-11-22T19:54:04.865982+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0022.html",
+      "sha256": "43db15e7c487bd40e4157e030cc73614a276a8b2c83fedb63196d9f38f4eaebb",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d",
+      "productos_detectados": 15
+    }
+  ]
+}
