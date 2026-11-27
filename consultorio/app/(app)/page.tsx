@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Estado, type TipoEstado } from "@/components/ui/estado";
 import { Tarjeta, TarjetaContenido } from "@/components/ui/tarjeta";
 import { marcarAvisoHecho } from "./acciones";
+import { sincronizarAvisosTareas, tareaDeAviso } from "@/lib/clinica/tareas";
+import { BotonTareaHecha } from "./tareas/boton-tarea-hecha";
 
 export const metadata = { title: "Inicio · Consultorio" };
 
@@ -18,11 +20,13 @@ const TEXTO_PRIORIDAD: Record<Aviso["prioridad"], string> = { alta: "Urgente", m
 function textoAccion(a: Aviso): string {
   if (a.tipo === "reserva_baja" || a.tipo === "agotado") return "Registrar compra";
   if (a.origen === "inventario") return "Ver insumo";
+  if (a.origen === "esterilizacion" || a.origen === "residuos") return "Ver recordatorio";
   return "Abrir";
 }
 
 function TarjetaAviso({ aviso }: { aviso: Aviso }) {
   const [primera, ...resto] = (aviso.detalle ?? "").split("\n");
+  const tareaId = tareaDeAviso(aviso);
   return (
     <li>
       <Tarjeta className="gap-3 py-4" data-prioridad={aviso.prioridad}>
@@ -42,12 +46,17 @@ function TarjetaAviso({ aviso }: { aviso: Aviso }) {
                 <Link href={aviso.urlAccion}>{textoAccion(aviso)}</Link>
               </Button>
             ) : null}
-            <form action={marcarAvisoHecho}>
-              <input type="hidden" name="id" value={aviso.id} />
-              <Button type="submit" variant="outline">
-                Marcar como hecho
-              </Button>
-            </form>
+            {tareaId !== null ? (
+              // Avisos de esterilización y residuos: un toque registra la tarea hecha hoy y cierra el aviso.
+              <BotonTareaHecha tareaId={tareaId} tipo={aviso.origen as "esterilizacion" | "residuos"} variante="outline" />
+            ) : (
+              <form action={marcarAvisoHecho}>
+                <input type="hidden" name="id" value={aviso.id} />
+                <Button type="submit" variant="outline">
+                  Marcar como hecho
+                </Button>
+              </form>
+            )}
           </div>
         </TarjetaContenido>
       </Tarjeta>
@@ -59,6 +68,7 @@ export default async function Inicio() {
   await requireSession();
   const hoy = hoyLocal();
   await actualizarAvisosInventario(hoy);
+  await sincronizarAvisosTareas(hoy);
   const [avisos, inventario] = await Promise.all([avisosPendientes(), inventarioConEstado(hoy)]);
   const porReponer = inventario.filter((i) => i.estado.nivel !== "suficiente" && (i.estado.reservaDefinida || i.lotes.length > 0));
   const porCaducar = inventario

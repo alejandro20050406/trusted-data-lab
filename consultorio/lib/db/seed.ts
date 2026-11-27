@@ -4,6 +4,7 @@ import { hashPassword } from "better-auth/crypto";
 import type { Db } from "./index";
 import { CATEGORIAS, DIENTES, INSUMOS } from "./catalogos";
 import { account, categoria, diente, insumo, user } from "./schema";
+import { sembrarClinica } from "@/lib/clinica/seed";
 
 /**
  * Crea la cuenta de prueba de la dentista con las variables SEED_DENTISTA_*.
@@ -57,4 +58,5 @@ export async function sembrarCatalogos(db: Db): Promise<void> {
 export async function sembrar(db: Db): Promise<void> {
   await sembrarDentista(db);
   await sembrarCatalogos(db);
+  await sembrarClinica(db);
 }
