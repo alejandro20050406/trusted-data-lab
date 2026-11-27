@@ -2,7 +2,7 @@
 
 Proyecto académico orientado al abastecimiento de insumos médicos y dentales para consultorios del estado de Colima. La máquina de captura usa el piloto odontológico de Imdent, Tu Universo Dental y Dentalink Market.
 
-El 12 de noviembre de 2026 una ejecución local capturó las tres páginas y guardó los originales y un manifiesto en Bronce. Una ejecución manual de GitHub Actions capturó las tres fuentes el 11 de noviembre usando Ubuntu 24.04; la ejecución diaria programada aún no se ha observado. No existe todavía un comparador funcional.
+La captura diaria programada (`.github/workflows/captura-bronce.yml`) corre desde el 12 de noviembre de 2026. Visita tres páginas de producto (Imdent, Tu Universo Dental y Dentalink Market) y los catálogos completos de cuatro tiendas de Imdent. Cada ejecución versiona sus capturas en `datos/bronce/odontologia/` y `datos/bronce/imd_catalogo/`, así que la historia se acumula en el repositorio y un clon limpio reproduce Plata y Oro con todas las fechas capturadas. Las capturas del 13 al 26 de noviembre se recuperaron de los artefactos de Actions y se verificaron contra el SHA-256 de su manifiesto. Las capturas parciales del 17 y 19 de noviembre (Imdent respondió 502/504) se conservan como evidencia de esas fallas. No existe todavía un comparador funcional.
 
 - [Propuesta y entrevista](docs/E0/propuesta.md)
 - [Captura y limitaciones](docs/E0/captura-bronce.md)
