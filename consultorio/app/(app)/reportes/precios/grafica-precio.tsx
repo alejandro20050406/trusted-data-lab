@@ -67,6 +67,8 @@ export function GraficaPrecio({ puntos, series, unidad }: { puntos: PuntoGrafica
     for (const s of series) fila[s] = s === p.serie ? p.precio : null;
     return fila;
   });
+  // Una marca por día de compra, sin repetir (dos compras el mismo día comparten fecha).
+  const ticks = [...new Set(filas.map((f) => f.t))];
   const precios = puntos.map((p) => p.precio);
   const min = Math.min(...precios);
   const max = Math.max(...precios);
@@ -96,6 +98,7 @@ export function GraficaPrecio({ puntos, series, unidad }: { puntos: PuntoGrafica
               type="number"
               scale="time"
               domain={["dataMin - 86400000", "dataMax + 86400000"]}
+              ticks={ticks.length <= 6 ? ticks : undefined}
               tickFormatter={fechaCorta}
               tick={{ fill: "#475569", fontSize: 13 }}
               stroke="#CBD5E1"

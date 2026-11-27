@@ -24,7 +24,7 @@ function Ranking({ titulo, filas, etiqueta }: { titulo: string; filas: { clave: 
               <li key={f.clave} className="flex flex-col gap-1" data-clave={f.clave}>
                 <div className="flex justify-between gap-3">
                   {f.href ? (
-                    <Link href={f.href} className="font-medium text-primary underline underline-offset-4">
+                    <Link href={f.href} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-4">
                       {f.nombre}
                     </Link>
                   ) : (
