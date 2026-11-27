@@ -80,3 +80,24 @@ En la ejecución local de referencia se generaron **14 estimaciones por mediana*
 En la ejecución local `20261113T055623405929Z`, realizada con dos juegos de capturas de cuatro tiendas y el piloto previo, se procesaron **4,356 observaciones comerciales: 4,178 válidas y 178 en cuarentena**. El catálogo ISSSTE aportó **1,579 filas válidas y 4 rechazadas**; Oro integró **3,667 filas**. Las cifras dependen de las capturas presentes: las filas no son productos independientes y los resultados remotos pueden diferir. El pipeline no prueba inventario, entrega en Colima, equivalencia de productos ni autorización para reutilizar contenido. Revisar condiciones de uso antes de publicar.
 
 La entrega requiere el tag `e1` apuntando al commit final verificado. El formulario oficial todavía no existe según la información proporcionada; registrar el enlace cuando esté disponible.
+
+## Análisis Estadístico · series de tiempo
+
+Las capturas comerciales empiezan en noviembre de 2026 y no alcanzan 36 periodos. Para el pronóstico se usa una serie oficial del mismo sector: el **índice de precios de Salud (COICOP 06) de México**, mensual, de julio de 2002 a julio de 2024 (265 meses). La fuente es la OCDE (`DSD_PRICES@DF_PRICES_ALL`), con dato primario del INPC de INEGI. El índice general sirve como segunda variable.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-lab.txt
+.\.venv\Scripts\python.exe -m scripts.captura_ipc_salud
+.\.venv\Scripts\python.exe -m src.series_e1
+.\.venv\Scripts\python.exe -m jupyter nbconvert --to notebook --execute --inplace laboratorio/e1_series.ipynb
+```
+
+| Criterio de la rúbrica | Evidencia | Resultado |
+| --- | --- | --- |
+| Caracterización y descomposición | [Notebook §1–2](../../laboratorio/e1_series.ipynb), `figuras/01_serie.png`, `02_descomposicion.png` | Tendencia +4.6 % anual y saltos en enero. Modelo **multiplicativo**: la amplitud estacional crece con el nivel (r = 0.55) |
+| Estacionariedad y autocorrelación | Notebook §3–5, `03_acf_pacf.png`, `04_correlacion_cruzada.png` | ADF: estacionaria con d=1 y D=1 (p < 0.001). ACF y PACF indican MA estacional de orden 1. Sin correlación contemporánea con la inflación general |
+| Cuatro modelos | Notebook §6, [`busqueda_arima_aic.csv`](../../datos/oro/series_e1/busqueda_arima_aic.csv) | Suavizamiento simple, Holt, Holt-Winters y SARIMA(1,1,3)(0,1,1)[12] (p, q, P, Q por AIC) |
+| Selección por error | [`comparacion_modelos.csv`](../../datos/oro/series_e1/comparacion_modelos.csv), [`validacion_origenes.csv`](../../datos/oro/series_e1/validacion_origenes.csv) | Prueba ago 2023–jul 2024: Holt RMSE 0.65, Holt-Winters 1.08, SARIMA 1.16. Promedio de 3 ventanas: **Holt-Winters 1.03**, Holt 1.11, SARIMA 1.14 |
+| Residuos y comunicación | Notebook §6–7, `06_residuos.png`, `07_pronostico.png`, [`pronostico_publicado.csv`](../../datos/oro/series_e1/pronostico_publicado.csv) | Holt no pasa Ljung-Box (p < 0.001) y la puerta 3 lo descarta. **Se publica Holt-Winters** (Ljung-Box p = 0.75 y 0.73). A julio de 2025: +3.6 % a +5.8 % con 95 % de confianza |
+
+Límites: es un índice nacional que incluye servicios médicos, no una canasta dental de Colima. La serie publicada termina en julio de 2024. La varianza de los residuos aumentó después de 2021.
