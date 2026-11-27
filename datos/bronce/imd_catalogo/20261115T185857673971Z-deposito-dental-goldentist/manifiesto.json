@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "estado": "completa",
+  "total_anunciado": 45,
+  "paginas": [
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-goldentist?view=list",
+      "consultado_utc": "2026-11-15T19:01:39.456775+00:00",
+      "estado": "ok",
+      "archivo": "pagina-0001.html",
+      "sha256": "12a1254836472e5c808cc5e5579791b03f6f25fea71ce78937fe10f473e81015",
+      "robots_url": "https://imdent.com/robots.txt",
+      "robots_sha256": "e31875ba4d2f047f06064729a51b6017a6d57c8511b6e07c0a15db21455e888d",
+      "productos_detectados": 45
+    }
+  ]
+}

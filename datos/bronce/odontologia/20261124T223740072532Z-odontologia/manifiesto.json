@@ -1,0 +1,38 @@
+[
+  {
+    "fuente": "imdent",
+    "url": "https://imdent.com/stores/deposito-dental-q-narvarte/products/resina-filtek-z350-xt-4-gr-3m",
+    "consultado_utc": "2026-11-24T22:37:40.072763+00:00",
+    "estado": "ok",
+    "archivo": "imdent.html",
+    "url_final": "https://imdent.com/stores/deposito-dental-q-narvarte/products/resina-filtek-z350-xt-4-gr-3m",
+    "sha256": "347fa421eb10badc1d26364df0355e0c498f0e629fee2ccf7033374f65426631",
+    "bytes": 86745,
+    "robots_url": "https://imdent.com/robots.txt",
+    "robots_sha256": "9feffb90230bd5b7fd43060431670129ea91193820e8185deb1c820348658f4d"
+  },
+  {
+    "fuente": "tu_universo_dental",
+    "url": "https://www.tuuniversodental.com.mx/resina-dental-3m-filtek",
+    "consultado_utc": "2026-11-24T22:37:42.778048+00:00",
+    "estado": "ok",
+    "archivo": "tu_universo_dental.html",
+    "url_final": "https://www.tuuniversodental.com.mx/resina-dental-3m-filtek",
+    "sha256": "c8ff0045cef85675c6a395600df7c9dc5e0727409c8d48ad610879f58ce4faa8",
+    "bytes": 801535,
+    "robots_url": "https://www.tuuniversodental.com.mx/robots.txt",
+    "robots_sha256": "095ff3f1fa6fb9f10aff666d57952bd9d4cee2969dd943efa88f0580db055da9"
+  },
+  {
+    "fuente": "dentalink_market",
+    "url": "https://dentalinkmarket.com/mx/productos/31069-jeringa-de-resina-z-350-xt-color-a2b-4g",
+    "consultado_utc": "2026-11-24T22:37:44.253953+00:00",
+    "estado": "ok",
+    "archivo": "dentalink_market.html",
+    "url_final": "https://dentalinkmarket.com/mx/productos/31069-jeringa-de-resina-z-350-xt-color-a2b-4g",
+    "sha256": "b635ada6b67011cfffc0da5ea279834d61257952a1bdbc816a88e376596e2c0b",
+    "bytes": 163736,
+    "robots_url": "https://dentalinkmarket.com/robots.txt",
+    "robots_sha256": "8b5e0f1c94111735ada24b9135ffc56f09b199c101bef2f0a11a040d2a6d3046"
+  }
+]

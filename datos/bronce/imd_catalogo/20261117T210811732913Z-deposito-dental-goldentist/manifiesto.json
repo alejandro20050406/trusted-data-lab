@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "estado": "parcial",
+  "total_anunciado": null,
+  "paginas": [
+    {
+      "fuente": "imdent_catalogo",
+      "url": "https://imdent.com/stores/deposito-dental-goldentist?view=list",
+      "estado": "error",
+      "consultado_utc": "2026-11-17T21:11:01.718440+00:00",
+      "detalle": "HTTP Error 504: Gateway Time-out"
+    }
+  ]
+}
