@@ -22,6 +22,13 @@
       "when": 1795632419922,
       "tag": "0002_precios_referencia",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795815052117,
+      "tag": "0003_clinica",
+      "breakpoints": true
     }
   ]
 }
