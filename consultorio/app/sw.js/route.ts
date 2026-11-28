@@ -1,10 +1,10 @@
-import { CODIGO_SW } from "@/lib/pwa/service-worker";
+import { codigoSW } from "@/lib/pwa/service-worker";
 
 export const dynamic = "force-static";
 
 /** Service worker en /sw.js, sin caché HTTP para que las versiones nuevas se apliquen. */
 export function GET() {
-  return new Response(CODIGO_SW, {
+  return new Response(codigoSW(process.env.NODE_ENV === "production"), {
     headers: {
       "content-type": "application/javascript; charset=utf-8",
       "cache-control": "no-cache, no-store, must-revalidate",

@@ -9,11 +9,18 @@
  *
  * Se escribe a mano (guía de PWA de Next.js) en lugar de Serwist para no
  * depender de un plugin de compilación con Turbopack.
+ *
+ * Solo en producción se guardan los estáticos: ahí los nombres de
+ * /_next/static cambian con cada versión. En desarrollo no cambian y la caché
+ * serviría código viejo, así que el service worker no guarda nada y borra lo
+ * que hubiera guardado.
  */
 export const VERSION_SW = "consultorio-v1";
 
-export const CODIGO_SW = String.raw`
+export function codigoSW(cachearEstaticos: boolean): string {
+  return String.raw`
 const CACHE = "${VERSION_SW}";
+const CACHEAR = ${cachearEstaticos ? "true" : "false"};
 const ESTATICOS = /^\/(_next\/static\/|iconos\/|apple-icon)/;
 
 const SIN_CONEXION = '<!doctype html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sin conexión · Consultorio</title><style>body{font-family:system-ui,sans-serif;margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff;color:#0F2A5C;padding:24px}main{max-width:28rem}h1{font-size:1.5rem}p{font-size:1.125rem;line-height:1.5}button{margin-top:16px;min-height:48px;padding:0 20px;font-size:1.125rem;border:0;border-radius:8px;background:#1D4ED8;color:#fff}</style></head><body><main><h1>Sin conexión</h1><p>El consultorio necesita internet para mostrar y guardar datos. Revisa el wifi o los datos del celular.</p><p>Los avisos importantes siguen en el panel de inicio cuando vuelva la conexión.</p><button onclick="location.reload()">Reintentar</button></main></body></html>';
@@ -23,7 +30,7 @@ self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((claves) => Promise.all(claves.filter((c) => c !== CACHE).map((c) => caches.delete(c))))
+      .then((claves) => Promise.all(claves.filter((c) => !CACHEAR || c !== CACHE).map((c) => caches.delete(c))))
       .then(() => self.clients.claim()),
   );
 });
@@ -41,7 +48,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  if (ESTATICOS.test(url.pathname)) {
+  if (CACHEAR && ESTATICOS.test(url.pathname)) {
     event.respondWith(
       caches.open(CACHE).then(async (cache) => {
         const guardada = await cache.match(req);
@@ -83,3 +90,4 @@ self.addEventListener("notificationclick", (event) => {
   );
 });
 `;
+}

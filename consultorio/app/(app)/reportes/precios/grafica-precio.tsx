@@ -73,6 +73,10 @@ export function GraficaPrecio({ puntos, series, unidad }: { puntos: PuntoGrafica
   const min = Math.min(...precios);
   const max = Math.max(...precios);
   const margen = Math.max((max - min) * 0.15, max * 0.05);
+  // Aire a los lados del eje X para que la primera y la última fecha no choquen con el eje Y ni se corten.
+  const tMin = Math.min(...ticks);
+  const tMax = Math.max(...ticks);
+  const aire = Math.max((tMax - tMin) * 0.1, 3 * 86_400_000);
 
   return (
     <figure className="flex flex-col gap-2" aria-label={`Gráfica del precio ${unidad} por fecha y proveedor`}>
@@ -97,7 +101,9 @@ export function GraficaPrecio({ puntos, series, unidad }: { puntos: PuntoGrafica
               dataKey="t"
               type="number"
               scale="time"
-              domain={["dataMin - 86400000", "dataMax + 86400000"]}
+              domain={[tMin - aire, tMax + aire]}
+              tickMargin={8}
+              interval="preserveStartEnd"
               ticks={ticks.length <= 6 ? ticks : undefined}
               tickFormatter={fechaCorta}
               tick={{ fill: "#475569", fontSize: 13 }}
@@ -106,6 +112,7 @@ export function GraficaPrecio({ puntos, series, unidad }: { puntos: PuntoGrafica
             />
             <YAxis
               domain={[Math.max(0, min - margen), max + margen]}
+              padding={{ bottom: 16 }}
               tickFormatter={(v: number) => pesos(v)}
               tick={{ fill: "#475569", fontSize: 13 }}
               stroke="#CBD5E1"
