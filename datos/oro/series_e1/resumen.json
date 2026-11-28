@@ -1,0 +1,327 @@
+{
+  "captura_bronce": "datos/bronce/ipc_salud/20261127T223048220680Z",
+  "caracterizacion": {
+    "inicio": "2002-07",
+    "fin": "2024-07",
+    "periodos": 265,
+    "minimo": 57.16159,
+    "maximo": 155.6715,
+    "crecimiento_total_pct": 172.33584650112078,
+    "inflacion_anual_media_pct": 4.618457429580463,
+    "inflacion_anual_max_pct": 7.34577187233596,
+    "mes_inflacion_anual_max": "2003-07"
+  },
+  "descomposicion": {
+    "corr_amplitud_nivel": 0.5478373670562393,
+    "desv_residuo_aditivo": 0.16954630200908286,
+    "desv_residuo_multiplicativo_en_puntos": 0.1345025190228159,
+    "fuerza_estacional_aditiva": 0.7125617816517515,
+    "eleccion": "multiplicativa"
+  },
+  "adf": [
+    {
+      "serie": "d=0, D=0",
+      "estadistico": 3.077669440913774,
+      "p_valor": 1.0,
+      "rezagos": 14,
+      "n": 250,
+      "critico_5pct": -2.8731715065600003,
+      "estacionaria": false,
+      "d": 0,
+      "D": 0
+    },
+    {
+      "serie": "d=1, D=0",
+      "estadistico": -0.7178351611342104,
+      "p_valor": 0.8420755854492821,
+      "rezagos": 13,
+      "n": 250,
+      "critico_5pct": -2.8731715065600003,
+      "estacionaria": false,
+      "d": 1,
+      "D": 0
+    },
+    {
+      "serie": "d=0, D=1",
+      "estadistico": -0.16498977863946435,
+      "p_valor": 0.9425681056689805,
+      "rezagos": 13,
+      "n": 239,
+      "critico_5pct": -2.8737103617125186,
+      "estacionaria": false,
+      "d": 0,
+      "D": 1
+    },
+    {
+      "serie": "d=1, D=1",
+      "estadistico": -5.34031325686442,
+      "p_valor": 4.515366637116525e-06,
+      "rezagos": 12,
+      "n": 239,
+      "critico_5pct": -2.8737103617125186,
+      "estacionaria": true,
+      "d": 1,
+      "D": 1
+    },
+    {
+      "serie": "d=2, D=0",
+      "estadistico": -7.540908513961842,
+      "p_valor": 3.3801909311857055e-11,
+      "rezagos": 12,
+      "n": 250,
+      "critico_5pct": -2.8731715065600003,
+      "estacionaria": true,
+      "d": 2,
+      "D": 0
+    }
+  ],
+  "diferenciacion": {
+    "d": 1,
+    "D": 1
+  },
+  "sarima_por_aic": {
+    "orden": [
+      1,
+      1,
+      3,
+      0,
+      1,
+      1
+    ],
+    "AIC": -264.26144700951653
+  },
+  "prueba": {
+    "inicio": "2023-08",
+    "fin": "2024-07"
+  },
+  "comparacion": [
+    {
+      "modelo": "Holt",
+      "MAE": 0.5367028387758997,
+      "RMSE": 0.653562751816787,
+      "MAPE": 0.3534868337498229
+    },
+    {
+      "modelo": "Holt-Winters",
+      "MAE": 0.9198647330256572,
+      "RMSE": 1.0793068818341711,
+      "MAPE": 0.599260233609995
+    },
+    {
+      "modelo": "SARIMA",
+      "MAE": 0.9790413780630823,
+      "RMSE": 1.1631680737676964,
+      "MAPE": 0.6374467536949195
+    },
+    {
+      "modelo": "Suavizamiento simple",
+      "MAE": 3.714841676730913,
+      "RMSE": 4.361992237186373,
+      "MAPE": 2.419182882050361
+    }
+  ],
+  "validacion_origenes_promedio": [
+    {
+      "modelo": "Holt-Winters",
+      "MAE": 0.8292925767392703,
+      "RMSE": 1.0285952981809088,
+      "MAPE": 0.5681014597143095
+    },
+    {
+      "modelo": "Holt",
+      "MAE": 0.8962797065278264,
+      "RMSE": 1.1088438680356123,
+      "MAPE": 0.6241037590743473
+    },
+    {
+      "modelo": "SARIMA",
+      "MAE": 0.9346906787919513,
+      "RMSE": 1.1401921866494797,
+      "MAPE": 0.6399804944564674
+    },
+    {
+      "modelo": "Suavizamiento simple",
+      "MAE": 3.9363027864522473,
+      "RMSE": 4.728441129023317,
+      "MAPE": 2.7057318786841535
+    }
+  ],
+  "menor_error_prueba": "Holt",
+  "modelo_publicado": "Holt-Winters",
+  "parametros": {
+    "Suavizamiento simple": {
+      "smoothing_level": 0.9999999850988388
+    },
+    "Holt": {
+      "smoothing_level": 0.9999999850988388,
+      "smoothing_trend": 0.7444681648738954
+    },
+    "Holt-Winters": {
+      "smoothing_level": 0.9999999850988388,
+      "smoothing_trend": 0.16210914612528632,
+      "smoothing_seasonal": 1.482344042031315e-08
+    },
+    "SARIMA": {
+      "ar.L1": 0.9943900288690071,
+      "ma.L1": -0.7848651927200003,
+      "ma.L2": 0.04015053295983233,
+      "ma.L3": -0.15973738053815142,
+      "ma.S.L12": -0.6813874637555918,
+      "sigma2": 0.017941597836238242
+    }
+  },
+  "diagnostico_residuos": {
+    "Suavizamiento simple": {
+      "ljung_box": [
+        {
+          "rezago": 12,
+          "Q": 333.1277331506403,
+          "p_valor": 5.059516321124827e-64
+        },
+        {
+          "rezago": 24,
+          "Q": 539.6224302449282,
+          "p_valor": 9.571688010157831e-99
+        }
+      ],
+      "sin_autocorrelacion": false,
+      "arch_p_valor": 5.41464287548118e-30,
+      "sin_efecto_arch": false,
+      "razon_varianza_final_inicial": 5.64237711009347,
+      "media": 0.3624624754996255
+    },
+    "Holt": {
+      "ljung_box": [
+        {
+          "rezago": 12,
+          "Q": 136.0875089682931,
+          "p_valor": 3.684265653361161e-23
+        },
+        {
+          "rezago": 24,
+          "Q": 259.1317036175555,
+          "p_valor": 2.539236878564151e-41
+        }
+      ],
+      "sin_autocorrelacion": false,
+      "arch_p_valor": 2.1443572083218286e-20,
+      "sin_efecto_arch": false,
+      "razon_varianza_final_inicial": 5.206469436425905,
+      "media": 0.0018058221442714681
+    },
+    "Holt-Winters": {
+      "ljung_box": [
+        {
+          "rezago": 12,
+          "Q": 8.390383181256365,
+          "p_valor": 0.7539278179267139
+        },
+        {
+          "rezago": 24,
+          "Q": 19.50445626566506,
+          "p_valor": 0.7245790797180091
+        }
+      ],
+      "sin_autocorrelacion": true,
+      "arch_p_valor": 0.07514321631429742,
+      "sin_efecto_arch": true,
+      "razon_varianza_final_inicial": 2.6379261549436195,
+      "media": 0.014703943568128602
+    },
+    "SARIMA": {
+      "ljung_box": [
+        {
+          "rezago": 12,
+          "Q": 6.139445963546711,
+          "p_valor": 0.9088899762754091
+        },
+        {
+          "rezago": 24,
+          "Q": 15.710074761878301,
+          "p_valor": 0.8982554245137091
+        }
+      ],
+      "sin_autocorrelacion": true,
+      "arch_p_valor": 0.5079024275020441,
+      "sin_efecto_arch": true,
+      "razon_varianza_final_inicial": 2.3668410566217184,
+      "media": 0.016703556175919357
+    }
+  },
+  "banda_ccf_95": 0.12346839451634756,
+  "pronostico": [
+    {
+      "fecha": "2024-08",
+      "pronostico": 156.15223348528215,
+      "limite_inferior_95": 155.90294377658873,
+      "limite_superior_95": 156.40682440381175
+    },
+    {
+      "fecha": "2024-09",
+      "pronostico": 156.5866358415168,
+      "limite_inferior_95": 156.20224163024022,
+      "limite_superior_95": 156.97679798667062
+    },
+    {
+      "fecha": "2024-10",
+      "pronostico": 156.92420748771167,
+      "limite_inferior_95": 156.4367125137126,
+      "limite_superior_95": 157.43842729484078
+    },
+    {
+      "fecha": "2024-11",
+      "pronostico": 157.18213802281772,
+      "limite_inferior_95": 156.56616663081505,
+      "limite_superior_95": 157.8301455879503
+    },
+    {
+      "fecha": "2024-12",
+      "pronostico": 157.53571349900642,
+      "limite_inferior_95": 156.78555467342073,
+      "limite_superior_95": 158.31097499934378
+    },
+    {
+      "fecha": "2025-01",
+      "pronostico": 158.69049800906916,
+      "limite_inferior_95": 157.81885531226717,
+      "limite_superior_95": 159.60696988344816
+    },
+    {
+      "fecha": "2025-02",
+      "pronostico": 159.7898400255925,
+      "limite_inferior_95": 158.78028655639625,
+      "limite_superior_95": 160.83441250022463
+    },
+    {
+      "fecha": "2025-03",
+      "pronostico": 160.71646801963303,
+      "limite_inferior_95": 159.55468328027277,
+      "limite_superior_95": 161.91718268506534
+    },
+    {
+      "fecha": "2025-04",
+      "pronostico": 161.39182638924882,
+      "limite_inferior_95": 160.09083467354512,
+      "limite_superior_95": 162.70888184322598
+    },
+    {
+      "fecha": "2025-05",
+      "pronostico": 161.9913653348198,
+      "limite_inferior_95": 160.52071945173478,
+      "limite_superior_95": 163.46818250365573
+    },
+    {
+      "fecha": "2025-06",
+      "pronostico": 162.5002143398324,
+      "limite_inferior_95": 160.86707453533617,
+      "limite_superior_95": 164.1249547949579
+    },
+    {
+      "fecha": "2025-07",
+      "pronostico": 162.99557133999375,
+      "limite_inferior_95": 161.215786235211,
+      "limite_superior_95": 164.75320365474738
+    }
+  ],
+  "frase_cliente": "Con 95 % de confianza, entre 07/2024 y 07/2025 los precios de productos y servicios de salud en México subirían entre 3.6 % y 5.8 % (estimación central: 4.7 %). Para un consultorio que gasta $10,000 al mes en insumos, eso equivale a presupuestar entre $10,356 y $10,583 al mes un año después, si su canasta sigue al índice nacional."
+}

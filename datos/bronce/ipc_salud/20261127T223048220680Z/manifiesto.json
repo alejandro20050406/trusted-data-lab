@@ -1,0 +1,28 @@
+{
+  "fuente": "OCDE - Consumer price indices (DSD_PRICES@DF_PRICES_ALL), México",
+  "origen_primario": "INEGI - Índice Nacional de Precios al Consumidor",
+  "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.TPS,DSD_PRICES@DF_PRICES_ALL,1.0/MEX.M.N.CPI.IX.CP06+_T.N._Z",
+  "consultado_utc": "2026-11-27T22:30:48.221923+00:00",
+  "licencia": "Términos de uso de datos de la OCDE: reutilización permitida con atribución",
+  "series": {
+    "CP06": "Salud (COICOP 06), índice 2015=100",
+    "_T": "Índice general, 2015=100"
+  },
+  "robots": "robots.txt ausente (HTTP 404); no hay restricción publicada",
+  "cobertura": {
+    "CP06": {
+      "periodos": 265,
+      "inicio": "2002-07",
+      "fin": "2024-07"
+    },
+    "_T": {
+      "periodos": 667,
+      "inicio": "1969-01",
+      "fin": "2024-07"
+    }
+  },
+  "estado": "ok",
+  "archivo": "ipc_mexico_ocde.csv",
+  "bytes": 89513,
+  "sha256": "593f625ee168dc34f3af7d3ffe6f4a2291123a9cbf625aa9f6fceefd6f3344be"
+}
